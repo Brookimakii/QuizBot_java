@@ -1,0 +1,70 @@
+stage:
+  -build
+  -test
+  -deploy
+
+image: maven:3.6.3-jdk-8
+
+build:
+  stage: build
+  variables:
+    GIT_STRATEGY: clone
+  script:
+    - mvn compile
+
+format-check:
+  stage: build
+  variables:
+    GIT_STRATEGY: clone
+    script:
+      - mvn checkstyle:check
+
+tests:
+  stage: test
+  variables:
+    GIT_STRATEGY: clone
+  script:
+    - mvn test
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+        - target/failsafe-reports/TEST-*.xml
+
+it-test:
+  stage: test
+  variables:
+    GIT_STRATEGY: clone
+  script:
+    - mvn failsafe:integration-test
+
+release-major:
+  stage: deploy
+  variables:
+    GIT_STRATEGY: clone
+  script:
+    - mvn clean
+  only:
+    - master
+  when: manual
+
+release-minor:
+  stage: deploy
+  variables:
+    GIT_STRATEGY: clone
+  script:
+    - mvn clean
+  only:
+    - master
+  when: manual
+
+release-patch:
+  stage: deploy
+  variables:
+    GIT_STRATEGY: clone
+  script:
+    - mvn clean
+  only:
+    - master
+  when: manual

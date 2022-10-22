@@ -1,0 +1,30 @@
+package model;
+
+import java.util.ArrayList;
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * This class represents a question.
+ */
+public class Question {
+  @Getter @Setter private long id;
+  @Getter @Setter private String statement;
+  @Getter @Setter private String answer;
+  @Getter @Setter private ArrayList<String> choices;
+  
+  /**
+   * This constructor creates a question.
+   *
+   * @param id        The id of the question.
+   * @param statement The statement of the question.
+   * @param answer    The answer of the question.
+   * @param choices   The choices of the question.
+   */
+  public Question(long id, String statement, String answer, ArrayList<String> choices) {
+    this.id = id;
+    this.statement = statement;
+    this.answer = answer;
+    this.choices = choices;
+  }
+}

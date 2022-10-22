@@ -3,10 +3,12 @@ package model;
 import java.util.ArrayList;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * This class represents a question.
  */
+@ToString
 public class Question {
   @Getter @Setter private long id;
   @Getter @Setter private String statement;

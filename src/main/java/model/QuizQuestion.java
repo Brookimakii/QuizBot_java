@@ -1,5 +1,6 @@
 package model;
 
+import exception.InvalidNumberOfChoices;
 import java.util.ArrayList;
 import java.util.Collections;
 import lombok.Getter;
@@ -22,6 +23,9 @@ public class QuizQuestion {
    * @param numberOfChoices the number of choices.
    */
   public QuizQuestion(Question question, int numberOfChoices) {
+    if (numberOfChoices<2){
+      throw new InvalidNumberOfChoices();
+    }
     --numberOfChoices;
     this.id = question.getId();
     this.statement = question.getStatement();

@@ -23,7 +23,7 @@ public class QuizQuestion {
    * @param numberOfChoices the number of choices.
    */
   public QuizQuestion(Question question, int numberOfChoices) {
-    if (numberOfChoices<2){
+    if (numberOfChoices < 2) {
       throw new InvalidNumberOfChoices();
     }
     --numberOfChoices;
@@ -38,7 +38,7 @@ public class QuizQuestion {
   private ArrayList<String> buildChoices(Question question, int numberOfChoices) {
     ArrayList<String> choices = new ArrayList<>(question.getChoices());
     Collections.shuffle(choices);
-    if (numberOfChoices < choices.size()){
+    if (numberOfChoices < choices.size()) {
       choices.subList(numberOfChoices, choices.size()).clear();
     }
     choices.add(question.getAnswer());

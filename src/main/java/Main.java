@@ -47,8 +47,8 @@ public class Main {
             "Lequel de ces instruments ne fait pas partie de l’orchestre symphonique ?",
             "La Flûte à bec",
             new ArrayList<>(List.of("Le Bassons", "Le Saxophone", "Le Glockenspiel"))
-        ), new Question(12, "Quelle est la bonne orthographe du mot suivant ?", "",
-            new ArrayList<>(List.of("", "", ""))
+        ), new Question(12, "De combien de pays le français est-il la langue officielle ?", "29",
+            new ArrayList<>(List.of("30", "31", "32"))
         ), new Question(13,
             "A quel ordre de grandeur numérique appartient le préfixe du Système international "
             + "d'unité “péta” ?", "10^15", new ArrayList<>(List.of("10^12", "10^17", "10^19"))

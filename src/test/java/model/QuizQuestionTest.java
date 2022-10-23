@@ -1,7 +1,9 @@
 package model;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import exception.InvalidNumberOfChoices;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +40,9 @@ class QuizQuestionTest {
       new Question(11, "Lequel de ces instruments ne fait pas partie de l’orchestre symphonique ?",
           "La Flûte à bec",
           new ArrayList<>(List.of("Le Bassons", "Le Saxophone", "Le Glockenspiel"))
-      ), new Question(12, "", "", new ArrayList<>(List.of("", "", ""))), new Question(13,
+      ), new Question(12, "De combien de pays le français est-il la langue officielle ?", "29",
+          new ArrayList<>(List.of("30", "31", "32"))
+      ), new Question(13,
           "A quel ordre de grandeur numérique appartient le préfixe du Système international "
           + "d'unité “péta” ?", "10^15", new ArrayList<>(List.of("10^12", "10^17", "10^19"))
       ), new Question(14, "Laquelle de ces figures de styles n'inclut aucune répétition ?",
@@ -60,13 +64,12 @@ class QuizQuestionTest {
       )
   ));
   
-  
   @Test
   void should_the_question_choices_be_random() {
     //Given
     Question question = questions.get(0);
     int numberOfChoices = 4;
-    
+  
     //When
     QuizQuestion question1 = new QuizQuestion(question, numberOfChoices);
     QuizQuestion question2 = new QuizQuestion(question, numberOfChoices);
@@ -80,25 +83,73 @@ class QuizQuestionTest {
     //Given
     Question question = questions.get(0);
     int numberOfChoices = 4;
-    
+  
     //When
     QuizQuestion question1 = new QuizQuestion(question, numberOfChoices);
     QuizQuestion question2 = new QuizQuestion(question, numberOfChoices);
-    
+    QuizQuestion question3 = new QuizQuestion(question, numberOfChoices);
+    QuizQuestion question4 = new QuizQuestion(question, numberOfChoices);
+    QuizQuestion question5 = new QuizQuestion(question, numberOfChoices);
+    QuizQuestion question6 = new QuizQuestion(question, numberOfChoices);
+    QuizQuestion question7 = new QuizQuestion(question, numberOfChoices);
+    QuizQuestion question8 = new QuizQuestion(question, numberOfChoices);
+    QuizQuestion question9 = new QuizQuestion(question, numberOfChoices);
+  
     //Then
-    assertThat(question1.getAnswerId()).isNotEqualTo(question2.getAnswerId());
+    List<Integer> test1 = List.of(question1.getChoices().size(), question2.getChoices().size(),
+        question3.getChoices().size(), question4.getChoices().size(), question5.getChoices().size(),
+        question6.getChoices().size(), question7.getChoices().size(), question8.getChoices().size(),
+        question9.getChoices().size()
+    );
+    List<Integer> test =
+        List.of(question1.getAnswerId(), question2.getAnswerId(), question3.getAnswerId(),
+            question4.getAnswerId(), question5.getAnswerId(), question6.getAnswerId(),
+            question7.getAnswerId(), question8.getAnswerId(), question9.getAnswerId()
+        );
+  
+    float avgNumberOfChoices = 0;
+    for (int x : test1) {
+      avgNumberOfChoices += x;
+    }
+    avgNumberOfChoices /= test1.size();
+    float numberOfCombinaison = 0;
+    float numberOfMatchingPaire = 0;
+    for (int x = 0; x < test.size() - 1; x++) {
+      for (int y = x + 1; y < test.size() - 1; y++) {
+        numberOfCombinaison++;
+        if (test.get(x).equals(test.get(y))) {
+          numberOfMatchingPaire++;
+        }
+      }
+    }
+  
+    assertThat(numberOfMatchingPaire * 100 / numberOfCombinaison).isLessThanOrEqualTo(
+        100 / avgNumberOfChoices);
   }
   
   @Test
   void should_choices_contain_the_maximum_amount_of_choices_if_the_ask_amount_is_greater_than_max() {
     //Given
     Question question = questions.get(0);
-    int numberOfChoices = question.getChoices().size()+2;
-    int expectedChoicesLength = question.getChoices().size()+1;
+    int numberOfChoices = Integer.MAX_VALUE;
+    int expectedChoicesLength = question.getChoices().size() + 1;
     //When
     QuizQuestion question1 = new QuizQuestion(question, numberOfChoices);
-    
+  
     //Then
     assertThat(question1.getChoices().size()).isEqualTo(expectedChoicesLength);
+  }
+  
+  @Test
+  void should_return_error_if_the_number_of_choices_ask_is_strictly_less_than_2() {
+    //Given
+    Question question = questions.get(0);
+    
+    //When
+    
+    //Then
+    assertThrows(InvalidNumberOfChoices.class, () -> new QuizQuestion(question, 1));
+    assertThrows(InvalidNumberOfChoices.class, () -> new QuizQuestion(question, 0));
+    assertThrows(InvalidNumberOfChoices.class, () -> new QuizQuestion(question, -1));
   }
 }

@@ -25,13 +25,21 @@ public class QuizQuestion {
     --numberOfChoices;
     this.id = question.getId();
     this.statement = question.getStatement();
-    ArrayList<String> choices = question.getChoices();
-    Collections.shuffle(choices);
-    choices.subList(numberOfChoices, choices.size()).clear();
-    choices.add(question.getAnswer());
+  
+    ArrayList<String> choices = buildChoices(question, numberOfChoices);
     this.choices = choices;
-    Collections.shuffle(choices);
     this.answerId = choices.indexOf(question.getAnswer());
+  }
+  
+  private ArrayList<String> buildChoices(Question question, int numberOfChoices) {
+    ArrayList<String> choices = new ArrayList<>(question.getChoices());
+    Collections.shuffle(choices);
+    if (numberOfChoices < choices.size()){
+      choices.subList(numberOfChoices, choices.size()).clear();
+    }
+    choices.add(question.getAnswer());
+    Collections.shuffle(choices);
+    return choices;
   }
 }
 

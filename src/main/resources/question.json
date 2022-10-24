@@ -1,0 +1,101 @@
+[ {
+  "id" : 1,
+  "statement" : "Combien de frontière possède la France ?",
+  "answer" : "8",
+  "choices" : [ "7", "6", "5" ]
+}, {
+  "id" : 2,
+  "statement" : "Quel est le symbole atomique du potassium ?",
+  "answer" : "K",
+  "choices" : [ "P", "Po", "Li" ]
+}, {
+  "id" : 3,
+  "statement" : "Combien de vaccins sont obligatoires en France ?",
+  "answer" : "11",
+  "choices" : [ "10", "9", "8" ]
+}, {
+  "id" : 4,
+  "statement" : "Combien d’os comporte le corps humain ?",
+  "answer" : "206",
+  "choices" : [ "200", "212", "194" ]
+}, {
+  "id" : 5,
+  "statement" : "En quelle année environ a été créé le premier ordinateur ?",
+  "answer" : "1943",
+  "choices" : [ "1940", "1946", "1937" ]
+}, {
+  "id" : 6,
+  "statement" : "Comment appelle-t-on les 40 élus de l’académie française décidant de la manière dont on emplois le français ?",
+  "answer" : "Les Immortels",
+  "choices" : [ "Les Académitiens", "Les Vieux", "Les 40" ]
+}, {
+  "id" : 7,
+  "statement" : "Combien de pays sont reconnus par l’ONU ?",
+  "answer" : "195",
+  "choices" : [ "200", "190", "185" ]
+}, {
+  "id" : 8,
+  "statement" : "Quel est le score parfait au bowling ?",
+  "answer" : "300",
+  "choices" : [ "200", "400", "500" ]
+}, {
+  "id" : 9,
+  "statement" : "Quel est le nom complet de Mozart ?",
+  "answer" : "Wolfgang Amadeus Mozart",
+  "choices" : [ "Amadeus Wolfgang Mozart", "Amadeus Mozart Wolfgang", "Wolfgang Mozart Amadeus" ]
+}, {
+  "id" : 10,
+  "statement" : "Laquelle de ces propositions n’est pas une unité du système international ?",
+  "answer" : "Gramme",
+  "choices" : [ "Candela", "Kelvin", "Mole" ]
+}, {
+  "id" : 11,
+  "statement" : "Lequel de ces instruments ne fait pas partie de l’orchestre symphonique ?",
+  "answer" : "La Flûte à bec",
+  "choices" : [ "Le Bassons", "Le Saxophone", "Le Glockenspiel" ]
+}, {
+  "id" : 12,
+  "statement" : "De combien de pays le français est-il la langue officielle ?",
+  "answer" : "29",
+  "choices" : [ "30", "31", "32" ]
+}, {
+  "id" : 13,
+  "statement" : "A quel ordre de grandeur numérique appartient le préfixe du Système international d'unité “péta” ?",
+  "answer" : "10^15",
+  "choices" : [ "10^12", "10^17", "10^19" ]
+}, {
+  "id" : 14,
+  "statement" : "Laquelle de ces figures de styles n'inclut aucune répétition ?",
+  "answer" : "Métalepse",
+  "choices" : [ "Allitération", "Épizeuxe", "Anadiplose" ]
+}, {
+  "id" : 15,
+  "statement" : "Combien de secondes y a-t-il dans une journée ?",
+  "answer" : "86400",
+  "choices" : [ "86200", "74600", "84800" ]
+}, {
+  "id" : 16,
+  "statement" : "Quelle est la distance Terre-Lune ?",
+  "answer" : "384.000 km",
+  "choices" : [ "3.840.000 km", "38.400 km", "38.400.000 km" ]
+}, {
+  "id" : 17,
+  "statement" : "En quelle année l’Homme a-t-il marché sur la lune ?",
+  "answer" : "1969",
+  "choices" : [ "1970", "1963", "1967" ]
+}, {
+  "id" : 18,
+  "statement" : "Quel objet céleste appelle-t-on “l’étoile du berger” ?",
+  "answer" : "Venus",
+  "choices" : [ "Proxima du centaure", "Un astéroïde du la ceinture de Kuiper", "Le Soleil" ]
+}, {
+  "id" : 19,
+  "statement" : "Quel élément chimique compose majoritairement la photosphère du soleil ?",
+  "answer" : "Hydrogène",
+  "choices" : [ "Polonium", "Hydrogène", "Oxygène" ]
+}, {
+  "id" : 20,
+  "statement" : "Quelles sont les 5 premières décimales de pi ?",
+  "answer" : "14159",
+  "choices" : [ "14519", "14915", "15194" ]
+} ]

@@ -15,17 +15,26 @@ import java.util.Collections;
 import model.Question;
 import org.apache.commons.io.IOUtils;
 
+/**
+ * This Class is able to save and load resources.
+ */
 public class PersistanceDriver {
-  static private final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-  static private final ObjectMapper mapper = new ObjectMapper();
-  static private final String questionFile = "question.json";
-  static private final String scoreFile = "score.json";
+  private static final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+  private static final ObjectMapper mapper = new ObjectMapper();
+  private static final String questionFile = "question.json";
+  private static final String scoreFile = "score.json";
   
   static {
     mapper.writerWithDefaultPrettyPrinter();
   }
   
-  
+  /**
+   * This methode load the question list.
+   *
+   * @return List of Question.
+   * @throws IOException if error occurs when reading the resource content.
+   * @throws NoFileFound if resource file not found.
+   */
   public static ArrayList<Question> loadQuestion() throws IOException, NoFileFound {
     InputStream inputStream = classLoader.getResourceAsStream(questionFile);
     fileExistenceCheck(inputStream);
@@ -34,6 +43,13 @@ public class PersistanceDriver {
     );
   }
   
+  /**
+   * This methode load the score list.
+   *
+   * @return List of Score.
+   * @throws IOException if error occurs when reading the resource content.
+   * @throws NoFileFound if resource file not found.
+   */
   public static ArrayList<Question> loadScore() throws IOException, NoFileFound {
     InputStream inputStream = classLoader.getResourceAsStream(scoreFile);
     fileExistenceCheck(inputStream);
@@ -42,12 +58,26 @@ public class PersistanceDriver {
     );
   }
   
+  /**
+   * This methode save the list of question.
+   *
+   * @param questions List of question.
+   * @throws IOException if error occurs when reading the resource content.
+   * @throws NoFileFound if resource file not found.
+   */
   public static void saveQuestion(ArrayList<Question> questions) throws IOException, NoFileFound {
     URL url = classLoader.getResource(questionFile);
     fileExistenceCheck(url);
     writeObjectInFile(questions, url);
   }
   
+  /**
+   * This methode save the list of score.
+   *
+   * @param scores List of score.
+   * @throws IOException if error occurs when reading the resource content.
+   * @throws NoFileFound if resource file not found.
+   */
   public static void saveScore(ArrayList<String> scores) throws IOException, NoFileFound {
     URL url = classLoader.getResource(scoreFile);
     fileExistenceCheck(url);

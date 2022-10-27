@@ -19,6 +19,12 @@ public class Question {
   @Getter @Setter private ArrayList<String> choices;
   
   /**
+   * Empty Question constructor for Jackson deserialization.
+   */
+  public Question() {
+  }
+  
+  /**
    * This constructor creates a question.
    *
    * @param id        The id of the question.

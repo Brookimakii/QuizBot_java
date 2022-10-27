@@ -92,7 +92,7 @@
   "id" : 19,
   "statement" : "Quel élément chimique compose majoritairement la photosphère du soleil ?",
   "answer" : "Hydrogène",
-  "choices" : [ "Polonium", "Hydrogène", "Oxygène" ]
+  "choices" : [ "Polonium", "Helium", "Oxygène" ]
 }, {
   "id" : 20,
   "statement" : "Quelles sont les 5 premières décimales de pi ?",

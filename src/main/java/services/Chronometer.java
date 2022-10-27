@@ -6,17 +6,27 @@ import java.util.Timer;
 import java.util.TimerTask;
 import lombok.Getter;
 
+/**
+ * This class is a chronometer.
+ */
 public class Chronometer extends Timer {
   @Getter private TimerTask timerTask;
   @Getter private long actualTime;
   @Getter private final long timeoutTime;
-  private final Object parent;
+  private final Object timeoutObject;
   private final String timeoutFunction;
   
-  public Chronometer(long durationSecond, Object parent, String timeoutFunction) {
+  /**
+   * This methode allow to create a chronometer.
+   *
+   * @param durationSecond  the duration of the chronometer in seconds.
+   * @param timeoutObject   the object containing the timeout function.
+   * @param timeoutFunction the timeout function name.
+   */
+  public Chronometer(long durationSecond, Object timeoutObject, String timeoutFunction) {
     
     this.timeoutTime = durationSecond * 1000;
-    this.parent = parent;
+    this.timeoutObject = timeoutObject;
     this.timeoutFunction = timeoutFunction;
     setupTimer();
   }
@@ -31,8 +41,8 @@ public class Chronometer extends Timer {
         if (++actualTime > timeoutTime + 1) {
           try {
             timeout();
-          } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException |
-                   QuizEnded e) {
+          } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException
+                   | QuizEnded e) {
             throw new RuntimeException(e);
           }
           this.cancel();
@@ -45,7 +55,7 @@ public class Chronometer extends Timer {
   
   private void timeout()
       throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, QuizEnded {
-    parent.getClass().getMethod(timeoutFunction).invoke(parent);
+    timeoutObject.getClass().getMethod(timeoutFunction).invoke(timeoutObject);
     timerTask.cancel();
   }
   

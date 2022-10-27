@@ -9,6 +9,9 @@ import lombok.Setter;
 import model.Question;
 import model.QuizQuestion;
 
+/**
+ * This is the Quiz class.
+ */
 public class Quiz {
   private final ArrayList<QuizQuestion> questions;
   private final ArrayList<Boolean> answer = new ArrayList<>();
@@ -21,7 +24,16 @@ public class Quiz {
   
   private boolean isAnswerAvailable;
   
-  
+  /**
+   * This methode set up the quiz.
+   *
+   * @param questions        the full list of question.
+   * @param timeToChoose     the maximum amount of time to answer a question.
+   * @param timeToNext       the time before the next question is asked.
+   * @param timeToShow       the time before the choices appear.
+   * @param numberOfQuestion the number of question.
+   * @param numberOfChoices  the number of choices.
+   */
   public Quiz(
       ArrayList<Question> questions, int timeToChoose, int timeToNext, int timeToShow,
       int numberOfQuestion, int numberOfChoices
@@ -44,6 +56,11 @@ public class Quiz {
   
   //------------------------------------------------------------------------------------------------
   
+  /**
+   * This method is the entry point of the quiz.
+   *
+   * @throws InterruptedException thrown when Time sleep or input failed.
+   */
   public void startQuiz() throws InterruptedException {
     actualQuestion = 0;
     try {
@@ -110,6 +127,13 @@ public class Quiz {
     
   }
   
+  
+  /**
+   * This methode is responsible for chronometer timeout.
+   *
+   * @throws QuizEnded            thrown when there isn't more question to answer.
+   * @throws InterruptedException thrown when Time sleep or input failed.
+   */
   public void questionTimeout() throws QuizEnded, InterruptedException {
     this.isAnswerAvailable = false;
     this.answer.add(false);
@@ -123,6 +147,7 @@ public class Quiz {
       case -1 -> System.out.println("Timeout");
       case 0 -> System.out.println("Incorrect");
       case 1 -> System.out.println("Correct");
+      default -> System.out.println("Should be Unreachable Statement");
     }
     int answerId = this.currentQuestion.getAnswerId();
     String answerString = this.currentQuestion.getChoices().get(answerId);
@@ -133,7 +158,7 @@ public class Quiz {
   
   private void result() {
     System.out.println(
-        "Your score: " + answer.stream().filter(aBoolean -> aBoolean = true).toList().size() + "/"
+        "Your score: " + answer.stream().filter(bool -> bool = true).toList().size() + "/"
         + questions.size());
   }
   

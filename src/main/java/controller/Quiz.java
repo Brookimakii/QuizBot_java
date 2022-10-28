@@ -1,4 +1,4 @@
-package services;
+package controller;
 
 import exception.QuizEnded;
 import java.time.Duration;
@@ -8,6 +8,7 @@ import java.util.Scanner;
 import lombok.Setter;
 import model.Question;
 import model.QuizQuestion;
+import services.Chronometer;
 
 /**
  * This is the Quiz class.
@@ -76,7 +77,7 @@ public class Quiz {
     if (actualQuestion > questions.size()) {
       throw new QuizEnded();
     }
-    System.out.println("-------------------------------------------------------------------------");
+    System.out.println("─────────────────────────────────────────────────────────────────────────");
     Thread.sleep(Duration.ofSeconds(timeToNext));
     
     this.currentQuestion = questions.get(actualQuestion - 1);

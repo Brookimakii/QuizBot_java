@@ -1,4 +1,4 @@
-package controller;
+package services;
 
 import exception.QuizEnded;
 import java.time.Duration;
@@ -8,7 +8,6 @@ import java.util.Scanner;
 import lombok.Setter;
 import model.Question;
 import model.QuizQuestion;
-import services.Chronometer;
 
 /**
  * This is the Quiz class.

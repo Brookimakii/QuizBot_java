@@ -76,7 +76,7 @@ public class Quiz {
     if (actualQuestion > questions.size()) {
       throw new QuizEnded();
     }
-    System.out.println("-------------------------------------------------------------------------");
+    System.out.println("─────────────────────────────────────────────────────────────────────────");
     Thread.sleep(Duration.ofSeconds(timeToNext));
     
     this.currentQuestion = questions.get(actualQuestion - 1);

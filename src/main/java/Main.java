@@ -1,7 +1,7 @@
+import controller.CommandManager;
 import exception.NoFileFound;
 import java.io.IOException;
-import services.PersistanceDriver;
-import services.Quiz;
+import java.util.Scanner;
 
 /**
  * This class is the entry point of the program.
@@ -13,12 +13,17 @@ public class Main {
    * @param args the arguments
    */
   public static void main(String[] args) {
-    try {
-      Quiz quiz = new Quiz(PersistanceDriver.loadQuestion(), 10, 3, 2, 10, 4);
-      quiz.startQuiz();
-    } catch (IOException | NoFileFound | InterruptedException e) {
-      throw new RuntimeException(e);
+    Scanner scan = new Scanner(System.in);
+    String state = "";
+    while (!state.equals("end")) {
+      System.out.print("Enter command: ");
+      String command = scan.next();
+      try {
+        state = CommandManager.command(command);
+      } catch (InterruptedException | NoFileFound | IOException e) {
+        throw new RuntimeException(e);
+      }
     }
-  
+    
   }
 }

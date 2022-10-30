@@ -77,7 +77,6 @@ public class Quiz {
       throw new QuizEnded();
     }
     System.out.println("─────────────────────────────────────────────────────────────────────────");
-    Thread.sleep(Duration.ofSeconds(timeToNext));
     
     this.currentQuestion = questions.get(actualQuestion - 1);
     System.out.println("Question n°" + actualQuestion + ": " + this.currentQuestion.getStatement());
@@ -152,8 +151,22 @@ public class Quiz {
     int answerId = this.currentQuestion.getAnswerId();
     String answerString = this.currentQuestion.getChoices().get(answerId);
     System.out.println("The correct answer is: n°" + (answerId + 1) + ": " + answerString);
-    
-    askNextQuestion();
+    if (timeToNext == 0) {
+      Scanner scanner = new Scanner(System.in);
+      String input = "";
+      while (!input.equals("n")) {
+        System.out.println("Press 'n' to continue or 'r' to report the question");
+        input = scanner.next();
+        switch (input) {
+          case "n" -> askNextQuestion();
+          case "r" -> GitHubReport.prepareQuestionReport(this.currentQuestion.getId());
+          default -> System.out.println("Veuillez entrer un caractère valide");
+        }
+      }
+    } else {
+      Thread.sleep(Duration.ofSeconds(timeToNext));
+      askNextQuestion();
+    }
   }
   
   private void result() {

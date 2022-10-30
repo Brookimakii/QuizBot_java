@@ -3,52 +3,53 @@ package services;
 import java.io.IOException;
 import java.util.Scanner;
 import org.kohsuke.github.GitHub;
+import repositories.PropertiesManagement;
 
 public class GitHubReport {
-  static String gitToken = System.getenv("GITHUB_TOKEN");
+  static String gitToken = java.lang.System.getenv("GITHUB_TOKEN");
   static String gitIssueRepo = "Brookimakii/QuizBotIssue";
   
   public static void sendReport(String title, String body, String category) {
     if (gitToken != null) {
-      System.out.println(gitToken);
-      System.out.println("Sending report to GitHub");
+      java.lang.System.out.println(gitToken);
+      java.lang.System.out.println("Sending report to GitHub");
       try {
         GitHub client = GitHub.connectUsingOAuth(gitToken);
-        client.getRepository(gitIssueRepo)
+        client.getRepository(PropertiesManagement.getProperty("issueRepo"))
             .createIssue(title)
             .body(body)
             .label(category)
             .create();
-        System.out.println("Report sent to GitHub");
+        java.lang.System.out.println("Report sent to GitHub");
       } catch (IOException e) {
-        System.out.println("Failed to send report to GitHub");
+        java.lang.System.out.println("Failed to send report to GitHub");
         throw new RuntimeException(e);
       }
     }else {
-      System.out.println("No GitHub token found");
+      java.lang.System.out.println("No GitHub token found");
     }
   }
   
   public static void prepareQuestionReport(long questionId){
-    Scanner scan = new Scanner(System.in);
+    Scanner scan = new Scanner(java.lang.System.in);
     
-    System.out.print("Enter title: ");
+    java.lang.System.out.print("Enter title: ");
     String title = scan.nextLine();
     title = title.equals("") ? "Question " + questionId + " Report" : title;
     
-    System.out.print("Type of issue: ");
+    java.lang.System.out.print("Type of issue: ");
     String type = scan.nextLine();
     type = type.equals("") ? "Ø" : type;
     
-    System.out.print("Solution Proposed: ");
+    java.lang.System.out.print("Solution Proposed: ");
     String solution = scan.nextLine();
     solution = solution.equals("") ? "Ø" : solution;
     
-    System.out.print("Additional Information: ");
+    java.lang.System.out.print("Additional Information: ");
     String additional = scan.nextLine();
     additional = additional.equals("") ? "Ø" : additional;
     
-    System.out.print("User name: ");
+    java.lang.System.out.print("User name: ");
     String user = scan.nextLine();
     user = user.equals("") ? "Ø" : user;
     

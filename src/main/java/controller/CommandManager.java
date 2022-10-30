@@ -3,8 +3,9 @@ package controller;
 import exception.NoFileFound;
 import java.io.IOException;
 import java.util.Scanner;
+import repositories.Resources;
 import services.GitHubReport;
-import services.PersistanceDriver;
+import repositories.PropertiesManagement;
 import services.Quiz;
 
 public class CommandManager {
@@ -13,26 +14,26 @@ public class CommandManager {
       throws InterruptedException, NoFileFound, IOException {
     switch (command) {
       case "start" -> {
-        System.out.println("Start");
-        Quiz quiz = new Quiz(PersistanceDriver.loadQuestion(), 10, 0, 2, 10, 4);
+        java.lang.System.out.println("Start");
+        Quiz quiz = new Quiz(Resources.getQuestions(), 10, 0, 2, 10, 4);
         quiz.startQuiz();
       }
-      case "reload" -> System.out.println("Reload");
+      case "reload" -> PropertiesManagement.load();
       case "report" -> {
-        System.out.println("Report");
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter title: ");
+        java.lang.System.out.println("Report");
+        Scanner scan = new Scanner(java.lang.System.in);
+        java.lang.System.out.print("Enter title: ");
         String title = scan.nextLine();
-        System.out.print("Enter body: ");
+        java.lang.System.out.print("Enter body: ");
         String body = scan.nextLine();
-        System.out.print("Enter category: ");
+        java.lang.System.out.print("Enter category: ");
         String category = scan.nextLine();
         GitHubReport.sendReport(title, body, category);
       }
       case "close" -> {
         return "end";
       }
-      default -> System.out.println("Command not Recognized");
+      default -> java.lang.System.out.println("Command not Recognized");
     }
     return "";
   }

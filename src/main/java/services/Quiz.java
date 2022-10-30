@@ -8,7 +8,6 @@ import java.util.Scanner;
 import lombok.Setter;
 import model.Question;
 import model.QuizQuestion;
-import repositories.PropertiesManagement;
 
 /**
  * This is the Quiz class.

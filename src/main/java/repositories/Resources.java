@@ -2,7 +2,6 @@ package repositories;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import exception.NoFileFound;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +30,7 @@ public class Resources {
    */
   public static void loadQuestion() throws IOException {
     InputStream inputStream =
-        classLoader.getResourceAsStream(PropertiesManagement.getProperty("questionFile"));
+        classLoader.getResourceAsStream(PropertiesManager.getProperty("questionFile"));
     if (inputStream == null) {
       questions = new ArrayList<>();
       return;
@@ -48,7 +47,7 @@ public class Resources {
    */
   public static void loadScore() throws IOException {
     InputStream inputStream =
-        classLoader.getResourceAsStream(PropertiesManagement.getProperty("scoreFile"));
+        classLoader.getResourceAsStream(PropertiesManager.getProperty("scoreFile"));
     if (inputStream == null) {
       scores = new ArrayList<>();
       return;
@@ -61,7 +60,7 @@ public class Resources {
   
   public static void saveQuestion(ArrayList<Question> questions) throws IOException {
     mapper.writerWithDefaultPrettyPrinter();
-    URL url = classLoader.getResource(PropertiesManagement.getProperty("questionFile"));
+    URL url = classLoader.getResource(PropertiesManager.getProperty("questionFile"));
     if (url == null) {
       java.lang.System.out.println("questionFile not found");
       return;
@@ -71,7 +70,7 @@ public class Resources {
   
   public static void saveScore(ArrayList<String> scores) throws IOException {
     mapper.writerWithDefaultPrettyPrinter();
-    URL url = classLoader.getResource(PropertiesManagement.getProperty("scoreFile"));
+    URL url = classLoader.getResource(PropertiesManager.getProperty("scoreFile"));
     if (url == null) {
       java.lang.System.out.println("scoreFile not found");
       return;

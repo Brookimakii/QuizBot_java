@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import repositories.Resources;
 import services.GitHubReport;
-import repositories.PropertiesManagement;
+import repositories.PropertiesManager;
 import services.Quiz;
 
 public class CommandManager {
@@ -18,7 +18,7 @@ public class CommandManager {
         Quiz quiz = new Quiz(Resources.getQuestions(), 10, 0, 2, 10, 4);
         quiz.startQuiz();
       }
-      case "reload" -> PropertiesManagement.load();
+      case "reload" -> PropertiesManager.load();
       case "report" -> {
         java.lang.System.out.println("Report");
         Scanner scan = new Scanner(java.lang.System.in);

@@ -7,7 +7,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import java.util.Scanner;
-import repositories.PropertiesManagement;
+import repositories.PropertiesManager;
 
 /**
  * This class is the entry point of the program.
@@ -25,7 +25,7 @@ public class Main {
       return;
     }
     try {
-      PropertiesManagement.load();
+      PropertiesManager.load();
     } catch (IOException e) {
       java.lang.System.out.println("Error while loading resources");
       e.fillInStackTrace();

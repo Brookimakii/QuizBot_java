@@ -3,7 +3,7 @@ package services;
 import java.io.IOException;
 import java.util.Scanner;
 import org.kohsuke.github.GitHub;
-import repositories.PropertiesManagement;
+import repositories.PropertiesManager;
 
 public class GitHubReport {
   static String gitToken = java.lang.System.getenv("GITHUB_TOKEN");
@@ -15,7 +15,7 @@ public class GitHubReport {
       java.lang.System.out.println("Sending report to GitHub");
       try {
         GitHub client = GitHub.connectUsingOAuth(gitToken);
-        client.getRepository(PropertiesManagement.getProperty("issueRepo"))
+        client.getRepository(PropertiesManager.getProperty("issueRepo"))
             .createIssue(title)
             .body(body)
             .label(category)

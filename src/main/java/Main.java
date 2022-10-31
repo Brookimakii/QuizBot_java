@@ -5,8 +5,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.Scanner;
+import javax.security.auth.login.LoginException;
+import model.Bot;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
 import repositories.PropertiesManager;
 
 /**
@@ -31,18 +37,21 @@ public class Main {
       e.fillInStackTrace();
       throw new RuntimeException(e);
     }
-    String rootPath = URLDecoder.decode(url.getPath(), StandardCharsets.UTF_8);
-    String appConfigPath = rootPath + "app.properties";
-  
-    Properties appProps = new Properties();
-    try {
-      appProps.load(new FileInputStream(appConfigPath));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+    ArrayList<String> argList = new ArrayList<>(Arrays.stream(args).toList());
+    if (argList.contains("--console")) {
+      System.out.println("Console mode");
+      consoleBot();
+    }else{
+      System.out.println("Discord mode");
+      discordBot();
     }
-    String repo = appProps.getProperty("description");
-    System.out.println("Issue repo: " + repo);
-    
+  }
+  
+  private static void discordBot() {
+    Bot bot = new Bot();
+  }
+  
+  private static void consoleBot() {
     Scanner scan = new Scanner(System.in);
     String state = "";
     while (!state.equals("end")) {
@@ -54,6 +63,5 @@ public class Main {
         throw new RuntimeException(e);
       }
     }
-    
   }
 }

@@ -1,6 +1,7 @@
 package model;
 
 import exception.ExceptionManager;
+import java.util.ArrayList;
 import javax.security.auth.login.LoginException;
 import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
@@ -12,6 +13,7 @@ public class Bot {
   @Getter private final JDABuilder builder;
   @Getter private final JDA jda;
   
+  
   public Bot() {
     builder = JDABuilder.createDefault(System.getenv("BOT_TOKEN"));
     jda = builder.addEventListeners(new BotEventListener())
@@ -20,4 +22,5 @@ public class Bot {
         .build();
   
   }
+  
 }

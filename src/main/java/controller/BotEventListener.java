@@ -1,14 +1,22 @@
 package controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.interactions.components.buttons.ButtonInteraction;
 import repositories.PropertiesManager;
+import services.EmbedMessageBuilder;
 
 public class BotEventListener extends ListenerAdapter {
   @Override
@@ -27,17 +35,45 @@ public class BotEventListener extends ListenerAdapter {
     String prefix = PropertiesManager.getProperty("prefix");
     if (content.startsWith(prefix)) {
       String command = content.substring(prefix.length());
+      try {
+        CommandManager.command(command, event);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
     }
     
   }
   
   @Override
   public void onMessageReactionAdd(MessageReactionAddEvent event) {
-    if (event.getUser() == null) return;
-    if (event.getUser().isBot()) return;
+    if (event.getUser() == null) {return;}
+    if (event.getUser().isBot()) {return;}
     
     User user = event.getUser();
     String message = event.getMessageId();
     MessageReaction reaction = event.getReaction();
   }
+  
+  @Override
+  public void onButtonInteraction(ButtonInteractionEvent event) {
+    String[] args = event.getButton().getId().split("_");
+    String name = event.getButton().getId();
+    System.out.println("Button pressed: " + name);
+    if (args[1].equalsIgnoreCase("page")) {
+      if (args[2].equalsIgnoreCase("cancel")) {
+        event.getMessage().delete().queue();
+        return;
+      }
+      int pageNumber = Integer.parseInt(args[2]);
+      EmbedMessageBuilder builder = new EmbedMessageBuilder();
+      switch (args[0]){
+        case "help":
+          builder.getHelpEmbed(pageNumber);
+          break;
+      }
+      event.getMessage().editMessageEmbeds(builder.getMessageEmbed())
+          .setActionRow(builder.getButtons()).queue();
+    }
+  }
+  
 }

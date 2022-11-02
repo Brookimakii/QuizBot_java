@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import lombok.Getter;
 import model.Question;
+import model.QuizSettings;
 import org.apache.commons.io.IOUtils;
 
 public class Resources {
@@ -20,6 +21,7 @@ public class Resources {
   private static final ObjectMapper mapper = new ObjectMapper();
   @Getter private static ArrayList<Question> questions;
   @Getter private static ArrayList<String> scores;
+  @Getter private static final ArrayList<QuizSettings> settings = new ArrayList<>();
   
   
   
@@ -76,6 +78,18 @@ public class Resources {
       return;
     }
     writeObjectInFile(scores, url);
+  }
+  
+  public static void addSetting(QuizSettings setting) {
+    settings.add(setting);
+  }
+  
+  public static void overwriteSetting(QuizSettings setting, int id) {
+    settings.set(id, setting);
+  }
+  
+  public static void deleteSetting(QuizSettings setting){
+    settings.remove(setting);
   }
   
   

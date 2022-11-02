@@ -1,101 +1,268 @@
-[ {
-  "id" : 1,
-  "statement" : "Combien de frontière possède la France ?",
-  "answer" : "8",
-  "choices" : [ "7", "6", "5" ]
+[
+  {
+    "id": 1,
+    "statement": "Combien de frontière possède la France ?",
+    "answer": "8",
+    "choices": ["7", "6", "5"]
+  }, {
+  "id": 2,
+  "statement": "Quel est le symbole atomique du potassium ?",
+  "answer": "K",
+  "choices": ["P", "Po", "Li"]
 }, {
-  "id" : 2,
-  "statement" : "Quel est le symbole atomique du potassium ?",
-  "answer" : "K",
-  "choices" : [ "P", "Po", "Li" ]
+  "id": 3,
+  "statement": "Combien de vaccins sont obligatoires en France ?",
+  "answer": "11",
+  "choices": ["10", "9", "8"]
 }, {
-  "id" : 3,
-  "statement" : "Combien de vaccins sont obligatoires en France ?",
-  "answer" : "11",
-  "choices" : [ "10", "9", "8" ]
+  "id": 4,
+  "statement": "Combien d’os comporte le corps humain ?",
+  "answer": "206",
+  "choices": ["200", "212", "194"]
 }, {
-  "id" : 4,
-  "statement" : "Combien d’os comporte le corps humain ?",
-  "answer" : "206",
-  "choices" : [ "200", "212", "194" ]
+  "id": 5,
+  "statement": "En quelle année environ a été créé le premier ordinateur ?",
+  "answer": "1943",
+  "choices": ["1940", "1946", "1937"]
 }, {
-  "id" : 5,
-  "statement" : "En quelle année environ a été créé le premier ordinateur ?",
-  "answer" : "1943",
-  "choices" : [ "1940", "1946", "1937" ]
+  "id": 6,
+  "statement": "Comment appelle-t-on les 40 élus de l’académie française décidant de la manière dont on emplois le français ?",
+  "answer": "Les Immortels",
+  "choices": ["Les Académitiens", "Les Vieux", "Les 40"]
 }, {
-  "id" : 6,
-  "statement" : "Comment appelle-t-on les 40 élus de l’académie française décidant de la manière dont on emplois le français ?",
-  "answer" : "Les Immortels",
-  "choices" : [ "Les Académitiens", "Les Vieux", "Les 40" ]
+  "id": 7,
+  "statement": "Combien de pays sont reconnus par l’ONU ?",
+  "answer": "195",
+  "choices": ["200", "190", "185"]
 }, {
-  "id" : 7,
-  "statement" : "Combien de pays sont reconnus par l’ONU ?",
-  "answer" : "195",
-  "choices" : [ "200", "190", "185" ]
+  "id": 8,
+  "statement": "Quel est le score parfait au bowling ?",
+  "answer": "300",
+  "choices": ["200", "400", "500"]
 }, {
-  "id" : 8,
-  "statement" : "Quel est le score parfait au bowling ?",
-  "answer" : "300",
-  "choices" : [ "200", "400", "500" ]
+  "id": 9,
+  "statement": "Quel est le nom complet de Mozart ?",
+  "answer": "Wolfgang Amadeus Mozart",
+  "choices": ["Amadeus Wolfgang Mozart", "Amadeus Mozart Wolfgang", "Wolfgang Mozart Amadeus"]
 }, {
-  "id" : 9,
-  "statement" : "Quel est le nom complet de Mozart ?",
-  "answer" : "Wolfgang Amadeus Mozart",
-  "choices" : [ "Amadeus Wolfgang Mozart", "Amadeus Mozart Wolfgang", "Wolfgang Mozart Amadeus" ]
+  "id": 10,
+  "statement": "Laquelle de ces propositions n’est pas une unité du système international ?",
+  "answer": "Gramme",
+  "choices": ["Candela", "Kelvin", "Mole"]
 }, {
-  "id" : 10,
-  "statement" : "Laquelle de ces propositions n’est pas une unité du système international ?",
-  "answer" : "Gramme",
-  "choices" : [ "Candela", "Kelvin", "Mole" ]
+  "id": 11,
+  "statement": "Lequel de ces instruments ne fait pas partie de l’orchestre symphonique ?",
+  "answer": "La Flûte à bec",
+  "choices": ["Le Bassons", "Le Saxophone", "Le Glockenspiel"]
 }, {
-  "id" : 11,
-  "statement" : "Lequel de ces instruments ne fait pas partie de l’orchestre symphonique ?",
-  "answer" : "La Flûte à bec",
-  "choices" : [ "Le Bassons", "Le Saxophone", "Le Glockenspiel" ]
+  "id": 12,
+  "statement": "De combien de pays le français est-il la langue officielle ?",
+  "answer": "29",
+  "choices": ["30", "31", "32"]
 }, {
-  "id" : 12,
-  "statement" : "De combien de pays le français est-il la langue officielle ?",
-  "answer" : "29",
-  "choices" : [ "30", "31", "32" ]
+  "id": 13,
+  "statement": "A quel ordre de grandeur numérique appartient le préfixe du Système international d'unité “péta” ?",
+  "answer": "10^15",
+  "choices": ["10^12", "10^17", "10^19"]
 }, {
-  "id" : 13,
-  "statement" : "A quel ordre de grandeur numérique appartient le préfixe du Système international d'unité “péta” ?",
-  "answer" : "10^15",
-  "choices" : [ "10^12", "10^17", "10^19" ]
+  "id": 14,
+  "statement": "Laquelle de ces figures de styles n'inclut aucune répétition ?",
+  "answer": "Métalepse",
+  "choices": ["Allitération", "Épizeuxe", "Anadiplose"]
 }, {
-  "id" : 14,
-  "statement" : "Laquelle de ces figures de styles n'inclut aucune répétition ?",
-  "answer" : "Métalepse",
-  "choices" : [ "Allitération", "Épizeuxe", "Anadiplose" ]
+  "id": 15,
+  "statement": "Combien de secondes y a-t-il dans une journée ?",
+  "answer": "86400",
+  "choices": ["86200", "74600", "84800"]
 }, {
-  "id" : 15,
-  "statement" : "Combien de secondes y a-t-il dans une journée ?",
-  "answer" : "86400",
-  "choices" : [ "86200", "74600", "84800" ]
+  "id": 16,
+  "statement": "Quelle est la distance Terre-Lune ?",
+  "answer": "384.000 km",
+  "choices": ["3.840.000 km", "38.400 km", "38.400.000 km"]
 }, {
-  "id" : 16,
-  "statement" : "Quelle est la distance Terre-Lune ?",
-  "answer" : "384.000 km",
-  "choices" : [ "3.840.000 km", "38.400 km", "38.400.000 km" ]
+  "id": 17,
+  "statement": "En quelle année l’Homme a-t-il marché sur la lune ?",
+  "answer": "1969",
+  "choices": ["1970", "1963", "1967"]
 }, {
-  "id" : 17,
-  "statement" : "En quelle année l’Homme a-t-il marché sur la lune ?",
-  "answer" : "1969",
-  "choices" : [ "1970", "1963", "1967" ]
+  "id": 18,
+  "statement": "Quel objet céleste appelle-t-on “l’étoile du berger” ?",
+  "answer": "Venus",
+  "choices": ["Proxima du centaure", "Un astéroïde du la ceinture de Kuiper", "Le Soleil"]
 }, {
-  "id" : 18,
-  "statement" : "Quel objet céleste appelle-t-on “l’étoile du berger” ?",
-  "answer" : "Venus",
-  "choices" : [ "Proxima du centaure", "Un astéroïde du la ceinture de Kuiper", "Le Soleil" ]
+  "id": 19,
+  "statement": "Quel élément chimique compose majoritairement la photosphère du soleil ?",
+  "answer": "Hydrogène",
+  "choices": ["Polonium", "Helium", "Oxygène"]
 }, {
-  "id" : 19,
-  "statement" : "Quel élément chimique compose majoritairement la photosphère du soleil ?",
-  "answer" : "Hydrogène",
-  "choices" : [ "Polonium", "Helium", "Oxygène" ]
+  "id": 20,
+  "statement": "Quelles sont les 5 premières décimales de pi ?",
+  "answer": "14159",
+  "choices": ["14519", "14915", "15194"]
 }, {
-  "id" : 20,
-  "statement" : "Quelles sont les 5 premières décimales de pi ?",
-  "answer" : "14159",
-  "choices" : [ "14519", "14915", "15194" ]
-} ]
+  "id": 21,
+  "statement": "Combien de frontières possède la Russie ?",
+  "answer": "14",
+  "choices": ["19", "16", "10"]
+}, {
+  "id": 22,
+  "statement": "Quel est l’unité désignant le nombre de désintégration d’un noyau atomique en une seconde ?",
+  "answer": "Becquerel",
+  "choices": ["Avogadro", "Bacquerel", "Avegadro"]
+}, {
+  "id": 23,
+  "statement": "Quel est la température de solidification de l’hélium à pression atmosphérique ?",
+  "answer": "Aucune",
+  "choices": ["0K", "0°C", "0°F"]
+}, {
+  "id": 24,
+  "statement": "Quel est le diamètre du Soleil ?",
+  "answer": "1.392.000 km",
+  "choices": ["1.382.000 km", "1.372.000 km", "1.402.000 km"]
+}, {
+  "id": 25,
+  "statement": "Contre quelle maladie a-t-on créé le tout premier vaccin ?",
+  "answer": "Variole",
+  "choices": ["Rage", "Peste", "Fièvre typhoïde"]
+}, {
+  "id": 26,
+  "statement": "En quel année a été découvert la pénicilline ?",
+  "answer": "1928",
+  "choices": ["1918", "1938", "1948"]
+}, {
+  "id": 27,
+  "statement": "Que signifie l’acronyme ADN ?",
+  "answer": "Acide Désoxyribonucléique",
+  "choices": ["Acide de Désinfection Nucléaire", "Acide de Désinfection Nucléique", "Acide Désoxyribonucléaire"]
+}, {
+  "id": 28,
+  "statement": "Quel est le nom du serment qu'un médecin doit effectuer avant d'exercer ?",
+  "answer": "Serment d'Hippocrate",
+  "choices": ["Serment d'Hérodicos", "Serment d'Hermes", "Serment de Kos"]
+}, {
+  "id": 29,
+  "statement": "Quel est la conjugaison du verbe manger à la première personne du subjonctif imparfait singulier?",
+  "answer": "que je mangeasse",
+  "choices": ["que j'eusse mangé", "que je mangeais", "que j'aie mangé"]
+}, {
+  "id": 30,
+  "statement": "Que signifie l’adjectif volubile ?",
+  "answer": "qui parle beaucoup",
+  "choices": ["qui est volumineux", "qui est gracieux", "qui est beaux"]
+}, {
+  "id": 31,
+  "statement": "Combien de son existe-t-il en français d’après l’API, sans compter les Unités suprasegmentales ?",
+  "answer": "38",
+  "choices": ["41", "34", "36"]
+}, {
+  "id": 32,
+  "statement": "Comment s’appelle l'inselberg au centre de l'Australie ?",
+  "answer": "Uluru",
+  "choices": ["Savandurga", "Suilven", "Mont Cooroy"]
+}, {
+  "id": 33,
+  "statement": "Combien de juges notent les concurrents au patinage artistique ?",
+  "answer": "9",
+  "choices": ["8", "7", "6"]
+}, {
+  "id": 34,
+  "statement": "Quand ont été créés les jeux olympiques ?",
+  "answer": "1896",
+  "choices": ["1888", "1892", "1900"]
+}, {
+  "id": 35,
+  "statement": "Quand à eu lieu la première coupe de monde de Football ?",
+  "answer": "1930",
+  "choices": ["1934", "1938", "1942"]
+}, {
+  "id": 36,
+  "statement": "Comment appelle-t-on l’obstacle remplit de sable au golf ?",
+  "answer": "Bunker",
+  "choices": ["Sand-wedge", "Green", "Sand-trap"]
+}, {
+  "id": 37,
+  "statement": "En quoi est fait une balle de polo ?",
+  "answer": "En bois",
+  "choices": ["Acier", "Mousse", "Cuire"]
+}, {
+  "id": 38,
+  "statement": "Quel est l’ordre de mammifères le plus vaste avec plus de 1700 espèces ?",
+  "answer": "Rodentia",
+  "choices": ["Primates", "Carnivora", "Proboscidea"]
+}, {
+  "id": 39,
+  "statement": "Combien de tentacules ont les sèches ?",
+  "answer": "10",
+  "choices": ["8", "6", "12"]
+}, {
+  "id": 40,
+  "statement": "Quel est l’oiseau avec la plus grande envergure ?",
+  "answer": "Condor des Andes",
+  "choices": ["L'albatros", "Le grand aigle", "Le faucon pèlerin"]
+}, {
+  "id": 41,
+  "statement": "Quel famille de poissons permet la production de caviar ?",
+  "answer": "L'esturgeon",
+  "choices": ["Carpes", "Morues", "Aiguilles"]
+}, {
+  "id": 42,
+  "statement": "Quel chef mort en 2018 était le chef le plus étoilé au monde ?",
+  "answer": "Joël Robuchon",
+  "choices": ["Alain Ducasse", "Gordon Ramsay", "Pierre Gagnaire"]
+}, {
+  "id": 43,
+  "statement": "Qui est la 3e puissance nucléaire mondiale ?",
+  "answer": "La France",
+  "choices": ["Le Japon", "L'Allemagne", "La Chine"]
+}, {
+  "id": 44,
+  "statement": "Combien de députés au Parlement Européen ?",
+  "answer": "751",
+  "choices": ["749", "747", "745"]
+}, {
+  "id": 45,
+  "statement": "Quel est la première console de salon répertorier ?",
+  "answer": "Magnavox Odyssey",
+  "choices": ["Atari 2600", "Intellivision", "Vectrex"]
+}, {
+  "id": 46,
+  "statement": "Dans la série Tekken comment s’appelle l’ours ?",
+  "answer": "Kuma",
+  "choices": ["Rilakkuma", "Kumamon", "Monokuma"]
+}, {
+  "id": 47,
+  "statement": "Quel est le prénom du politicien et révolutionnaire Robespierre ?",
+  "answer": "Maximilien",
+  "choices": ["François", "Barthélémy", "Augustin"]
+}, {
+  "id": 48,
+  "statement": "Combien de temps dure la révolution française de 1830 ?",
+  "answer": "3 jours",
+  "choices": ["1 nuit", "5 jours", "1 semaine"]
+}, {
+  "id": 49,
+  "statement": "De combien de tuiles se compose un jeu de mah-jong ?",
+  "answer": "144",
+  "choices": ["140", "136", "132"]
+}, {
+  "id": 50,
+  "statement": "Que signifient les initiales de la célèbre chaîne de Fast-food KFC ?",
+  "answer": "Kentucky Fried Chicken",
+  "choices": ["Kentucky Fry Chicken", "Kentucky Fry Chickenhearted", "Kentucky Fried Chickenhearted"]
+}, {
+  "id": 51,
+  "statement": "A partir de quelle plante obtient-on le rhum ?",
+  "answer": "Canne à sucre",
+  "choices": ["Raisin", "Noix de Coco", "Mangue"]
+}, {
+  "id": 52,
+  "statement": "Qu'est-ce qu'une drupe",
+  "answer": "Fruit à noyau",
+  "choices": ["Fruit à pépin", "Légume à pépin", "Légume à écorce"]
+}, {
+  "id": 53,
+  "statement": "En quelle année est apparue la TV couleur ?",
+  "answer": "1967",
+  "choices": ["1966", "1965", "1964"]
+}
+]

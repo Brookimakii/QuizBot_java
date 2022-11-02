@@ -18,8 +18,9 @@ public class PropertiesManager {
   
   static {
     
-    URL url = classLoader.getResource("app.properties");
+    URL url = classLoader.getResource("");
     if (url == null) {
+      System.out.println("app.properties not found");
       throw new RuntimeException("app.properties not found");
     }
     String rootPath = URLDecoder.decode(url.getPath(), StandardCharsets.UTF_8);

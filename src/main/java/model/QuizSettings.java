@@ -1,8 +1,10 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import lombok.Getter;
 import lombok.Setter;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.ThreadChannel;
@@ -35,13 +37,31 @@ public class QuizSettings {
     this.players.add(user);
   }
   
-  public void removePlayer(String userName) {
-    User playerToRemove = this.players.stream()
-        .filter(user -> userName.contains(user.getId()))
-        .findFirst()
-        .orElse(null);
-    System.out.println(playerToRemove);
+  public void removePlayer(User playerToRemove) {
     this.players.remove(playerToRemove);
+  }
+  
+  public void addPlayer(String value) {
+    Member addedUser =
+        this.getQuizThread().getParentChannel().getGuild().getMemberById(value);
+    if (addedUser == null) {
+      this.getQuizThread().sendMessage("Unable to find the user: " + value)
+          .queue(message -> message.delete().queueAfter(5, TimeUnit.SECONDS));
+      return;
+    }
+    addPlayer(addedUser.getUser());
+  }
+  
+  public void removePlayer(String userName) {
+    User playerToRemove =
+        this.players.stream().filter(user -> userName.contains(user.getId())).findFirst()
+            .orElse(null);
+    System.out.println(playerToRemove);
+    removePlayer(playerToRemove);
+  }
+  
+  public void start() {
+    this.isRunning = true;
   }
   
   @Override

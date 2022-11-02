@@ -125,6 +125,36 @@ public class CommandManager {
           setting.getOriginalMessage().editMessage(value).queue();
           setting.setTitle(value);
         }
+        
+        case "join" -> {
+          if (value.equals("")) {
+            if (!setting.getPlayers().contains(user)) {
+              setting.addPlayer(user);
+            }
+          } else {
+            if (!user.equals(setting.getRoomMaster())) {
+              sendTemporaryMessage(
+                  setting.getQuizThread(), "Only the room master can use this command.", 5);
+            } else {
+              setting.addPlayer(value);
+            }
+          }
+        }
+        case "quit" -> {
+          if (value.equals("")) {
+            if (setting.getPlayers().contains(user)) {
+              setting.removePlayer(user);
+            }
+          } else {
+            if (!user.equals(setting.getRoomMaster())) {
+              sendTemporaryMessage(
+                  setting.getQuizThread(), "Only the room master can use this command.", 5);
+            } else {
+              setting.removePlayer(value);
+            }
+          }
+        }
+        
         case "stop" -> {
           sendTemporaryMessage(
               setting.getQuizThread().getParentMessageChannel(), "Quiz Canceled", 5);
@@ -133,25 +163,17 @@ public class CommandManager {
           Resources.deleteSetting(setting);
           setting = null;
         }
-        case "start" -> {}
-        case "join" -> {
-          if (!setting.getPlayers().contains(user)) {
-            setting.addPlayer(user);
-          }
+        case "start" -> {
+          System.out.println();
+          setting.start();
         }
-        case "remove" -> {
-          System.out.println("User: " + user.getId());
-          System.out.println("Input: " + value);
-          setting.removePlayer(value);
-        }
-        default -> {
-          sendTemporaryMessage(setting.getQuizThread(), "Error: " + command + " not Recognized", 5);
-        }
+        default ->
+            sendTemporaryMessage(setting.getQuizThread(), "Error: " + command + " not Recognized", 5);
       }
     } catch (NumberFormatException e) {
       sendTemporaryMessage(setting.getQuizThread(),
           "Error: for the command \"" + key + "\" a number is awaited. \"" + value
-          + "\" isn't a number", 5
+          + "\" isn't a number", 3
       );
     }
     if (setting != null) {

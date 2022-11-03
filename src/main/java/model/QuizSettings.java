@@ -8,11 +8,15 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.ThreadChannel;
+import services.DiscordQuiz;
 
 public class QuizSettings {
+  @Getter @Setter private DiscordQuiz quiz;
+  
   @Getter private final User roomMaster;
   @Getter @Setter private Message parameterMessage;
   @Getter @Setter private Message originalMessage;
+  @Getter @Setter private Message questionMessage;
   @Getter @Setter private ThreadChannel quizThread;
   @Getter private final ArrayList<User> players;
   
@@ -26,6 +30,16 @@ public class QuizSettings {
   @Getter @Setter private int choicesNumber = 4;
   
   @Getter @Setter private boolean isRunning = false;
+  
+  @Override
+  public String toString() {
+    return "QuizSettings{" + "quiz=" + quiz + ", roomMaster=" + roomMaster + ", parameterMessage="
+           + parameterMessage + ", originalMessage=" + originalMessage + ", questionMessage="
+           + questionMessage + ", quizThread=" + quizThread + ", players=" + players + ", title='"
+           + title + '\'' + ", timeToShowChoices=" + timeToShowChoices + ", timeToPassToNext="
+           + timeToPassToNext + ", timeToAnswer=" + timeToAnswer + ", questionNumber="
+           + questionNumber + ", choicesNumber=" + choicesNumber + ", isRunning=" + isRunning + '}';
+  }
   
   public QuizSettings(User roomMaster) {
     this.roomMaster = roomMaster;
@@ -63,9 +77,11 @@ public class QuizSettings {
   public void start() {
     this.isRunning = true;
   }
+  public void backup() {
+    this.isRunning = true;
+  }
   
-  @Override
-  public String toString() {
+  public String toStyleString() {
     StringBuilder builder = new StringBuilder();
     players.forEach(player -> builder.append("> ").append(player.getName()));
     

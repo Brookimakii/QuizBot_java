@@ -37,7 +37,7 @@ public class Resources {
       questions = new ArrayList<>();
       return;
     }
-    questions = mapper.readValue(IOUtils.toString(inputStream, StandardCharsets.UTF_8),
+    Resources.questions = mapper.readValue(IOUtils.toString(inputStream, StandardCharsets.UTF_8),
         new TypeReference<>() {}
     );
   }

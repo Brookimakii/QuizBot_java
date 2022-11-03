@@ -30,7 +30,7 @@ public class PropertiesManager {
       load();
     } catch (IOException e) {
       appProps = null;
-      java.lang.System.out.println("Error while loading app.properties");
+      System.out.println("Error while loading app.properties");
       throw new RuntimeException(e);
     }
     
@@ -40,13 +40,13 @@ public class PropertiesManager {
     try {
       Resources.loadQuestion();
     } catch (IOException e) {
-      java.lang.System.out.println("Error while loading questionFile");
+      System.out.println("Error while loading questionFile");
       throw e;
     }
     try {
       Resources.loadScore();
     } catch (IOException e) {
-      java.lang.System.out.println("Error while loading scoreFile");
+      System.out.println("Error while loading scoreFile");
       throw e;
     }
   }

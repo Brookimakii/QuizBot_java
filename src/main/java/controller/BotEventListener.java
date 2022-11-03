@@ -52,6 +52,8 @@ public class BotEventListener extends ListenerAdapter {
     User user = event.getUser();
     String message = event.getMessageId();
     MessageReaction reaction = event.getReaction();
+    System.out.println("We received a reaction from " + user.getName() + ": " + reaction.getEmoji().getName());
+    
   }
   
   @Override

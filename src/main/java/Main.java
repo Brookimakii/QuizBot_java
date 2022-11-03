@@ -14,6 +14,7 @@ import model.Bot;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import repositories.PropertiesManager;
+import repositories.Resources;
 
 /**
  * This class is the entry point of the program.
@@ -43,11 +44,15 @@ public class Main {
       consoleBot();
     }else{
       System.out.println("Discord mode");
-      discordBot();
+      try {
+        discordBot();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
     }
   }
   
-  private static void discordBot() {
+  private static void discordBot() throws IOException {
     Bot bot = new Bot();
   }
   

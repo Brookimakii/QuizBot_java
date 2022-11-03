@@ -7,11 +7,13 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import model.QuizSettings;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.ThreadChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import repositories.Resources;
+import services.DiscordQuiz;
 import services.EmbedMessageBuilder;
 import services.GitHubReport;
 import repositories.PropertiesManager;
@@ -50,7 +52,7 @@ public class CommandManager {
     
     String status = getQuizStatus(event);
     switch (status) {
-      case "in game" -> {}
+      case "in game" -> playing(command, event);
       case "setting" -> setting(command, event);
       case "out of game" -> outOfGame(command, event);
     }
@@ -58,7 +60,7 @@ public class CommandManager {
   
   private static String getQuizStatus(MessageReceivedEvent event) {
     QuizSettings settings = getFilteredQuizSettings(event);
-    
+  
     return settings != null ? settings.isRunning() ? "in game" : "setting" : "out of game";
   }
   
@@ -66,6 +68,25 @@ public class CommandManager {
     return Resources.getSettings().stream()
         .filter(setting -> setting.getQuizThread().equals(event.getChannel().asThreadChannel()))
         .findFirst().orElse(null);
+  }
+  
+  //------------------------------------------------------------------------------------------------
+  private static void playing(String command, MessageReceivedEvent event) {
+    QuizSettings settings = getFilteredQuizSettings(event);
+    User user = event.getAuthor();
+    if (user != settings.getRoomMaster()) {return;}
+    event.getMessage().delete().complete();
+    switch (command) {
+      case "yes" -> {
+        settings.getQuiz().nextQuestion();
+      }
+      case "no" -> {
+        settings.backup();
+      }
+      default ->
+          sendTemporaryMessage(settings.getQuizThread(), "Error: " + command + " not Recognized", 5);
+    }
+    
   }
   
   //------------------------------------------------------------------------------------------------
@@ -77,7 +98,6 @@ public class CommandManager {
     
     QuizSettings setting = getFilteredQuizSettings(event);
     int quizSettingId = Resources.getSettings().indexOf(setting);
-    String prefix = PropertiesManager.getProperty("prefix");
     String key;
     String value;
     try {
@@ -166,6 +186,10 @@ public class CommandManager {
         case "start" -> {
           System.out.println();
           setting.start();
+          Message message;
+          QuizSettings finalSetting = setting;
+          setting.getQuizThread().sendMessage("Confirm parameters ?")
+              .queue(msg -> new DiscordQuiz(finalSetting, msg));
         }
         default ->
             sendTemporaryMessage(setting.getQuizThread(), "Error: " + command + " not Recognized", 5);
@@ -179,7 +203,7 @@ public class CommandManager {
     if (setting != null) {
       event.getMessage().delete().queue();
       Resources.overwriteSetting(setting, quizSettingId);
-      setting.getParameterMessage().editMessage(setting.toString()).queue();
+      setting.getParameterMessage().editMessage(setting.toStyleString()).queue();
     }
   }
   
@@ -216,7 +240,7 @@ public class CommandManager {
       settings.setOriginalMessage(message);
       message.createThreadChannel("Quiz").queue(thread -> {
         settings.setQuizThread(thread);
-        thread.sendMessage(settings.toString()).queue(settings::setParameterMessage);
+        thread.sendMessage(settings.toStyleString()).queue(settings::setParameterMessage);
       });
     });
     

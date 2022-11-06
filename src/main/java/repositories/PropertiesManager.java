@@ -36,6 +36,11 @@ public class PropertiesManager {
     
   }
   
+  /**
+   * Load resources.
+   *
+   * @throws IOException if an error occurs while loading resources
+   */
   public static void load() throws IOException {
     try {
       Resources.loadQuestion();

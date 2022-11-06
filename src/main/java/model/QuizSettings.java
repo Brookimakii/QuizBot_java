@@ -11,6 +11,9 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.ThreadChannel;
 import services.DiscordQuiz;
 
+/**
+ * This class contains all the settings for a quiz.
+ */
 public class QuizSettings {
   @Getter @Setter private DiscordQuiz quiz;
   
@@ -42,6 +45,11 @@ public class QuizSettings {
            + questionNumber + ", choicesNumber=" + choicesNumber + ", isRunning=" + isRunning + '}';
   }
   
+  /**
+   * This constructor is used to create a new quiz.
+   *
+   * @param roomMaster The user who created the quiz.
+   */
   public QuizSettings(User roomMaster) {
     this.roomMaster = roomMaster;
     this.players = new ArrayList<>();
@@ -50,19 +58,35 @@ public class QuizSettings {
   
   //------------------------------------------------------------------------------------------------
   
+  /**
+   * The method to add a player to the quiz.
+   *
+   * @param user the user to add.
+   */
   public void addPlayer(User user) {
     this.players.add(user);
   }
   
-  public void removePlayer(User playerToRemove) {
-    this.players.remove(playerToRemove);
+  /**
+   * This method is used to add a player from the list of players.
+   *
+   * @param members The list of members to add.
+   */
+  public void addPlayer(List<Member> members) {
+    for (Member member : members) {
+      addPlayer(member.getUser());
+    }
   }
   
+  /**
+   * This method is used to add a player from the quiz.
+   *
+   * @param value the name of the user to remove.
+   */
   public void addPlayer(String value) {
     User newPlayer = Bot.getJda().getUserById(value);
     System.out.println("New player: " + newPlayer);
-    Member addedUser =
-        this.getQuizThread().getParentChannel().getGuild().getMemberById(value);
+    Member addedUser = this.getQuizThread().getParentChannel().getGuild().getMemberById(value);
     System.out.println("Added user: " + addedUser);
     if (addedUser == null) {
       this.getQuizThread().sendMessage("Unable to find the user: " + value)
@@ -72,12 +96,32 @@ public class QuizSettings {
     addPlayer(addedUser.getUser());
   }
   
-  public void addPlayer(List<Member> members) {
+  
+  /**
+   * This method is used to remove a player from the list of players.
+   *
+   * @param user The user to remove.
+   */
+  public void removePlayer(User user) {
+    this.players.remove(user);
+  }
+  
+  /**
+   * This method is used to remove all the players from the list.
+   *
+   * @param members The list of members to remove.
+   */
+  public void removePlayer(List<Member> members) {
     for (Member member : members) {
-      addPlayer(member.getUser());
+      removePlayer(member.getUser());
     }
   }
   
+  /**
+   * This method is used to remove a player from the quiz.
+   *
+   * @param userName the name of the user to remove
+   */
   public void removePlayer(String userName) {
     User playerToRemove =
         this.players.stream().filter(user -> userName.contains(user.getId())).findFirst()
@@ -86,11 +130,7 @@ public class QuizSettings {
     removePlayer(playerToRemove);
   }
   
-  public void removePlayer(List<Member> members) {
-    for (Member member : members) {
-      removePlayer(member.getUser());
-    }
-  }
+
   
   
   public void start() {
@@ -101,6 +141,11 @@ public class QuizSettings {
     this.isRunning = true;
   }
   
+  /**
+   * This print the settings of the quiz.
+   *
+   * @return the message to send.
+   */
   public String toStyleString() {
     StringBuilder builder = new StringBuilder();
     players.forEach(player -> builder.append("> <@").append(player.getId()).append(">\n"));

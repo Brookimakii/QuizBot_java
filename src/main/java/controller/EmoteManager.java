@@ -11,12 +11,19 @@ import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import repositories.Resources;
 
+/**
+ * This class is used to manage the emotes.
+ */
 public class EmoteManager {
+  /**
+   * This method is used to manage the emotes.
+   *
+   * @param event The event.
+   */
   public static void emote(MessageReactionAddEvent event) {
     QuizSettings settings = Resources.getFilteredSetting(event.getChannel());
     User user = event.getUser();
-    String emote = event.getReaction().getEmoji().getName();
-    
+  
     if (settings == null || user == null) {
       return;
     }
@@ -27,7 +34,8 @@ public class EmoteManager {
     if (!settings.getPlayers().contains(user)) {
       return;
     }
-    
+  
+    String emote = event.getReaction().getEmoji().getName();
     List<String> emotes = settings.getQuiz().getEmotes();
     int answer = emotes.indexOf(emote);
     
@@ -48,12 +56,14 @@ public class EmoteManager {
         settings.getQuiz().registerAnswer(user, answer);
       }
     } else if (settings.getQuiz().isPassingNeeded()) {
-      Message message = event.getChannel().retrieveMessageById(settings.getQuestionMessage().getId()).complete();
-      for (MessageReaction reaction : message.getReactions()){
+      Message message = event.getChannel()
+          .retrieveMessageById(settings.getQuestionMessage().getId())
+          .complete();
+      for (MessageReaction reaction : message.getReactions()) {
         System.out.println(reaction.getEmoji().getName());
       }
       switch (emote) {
-        case "\u23ED\uFE0F"-> {
+        case "\u23ED\uFE0F" -> {
           if (user.equals(settings.getRoomMaster())) {
             settings.getQuiz().nextQuestion();
           } else {
@@ -65,11 +75,11 @@ public class EmoteManager {
             }
           }
         }
-        case "\u2757"-> {
+        case "\u2757" -> {
           System.out.println("Reporting");
           event.getReaction().removeReaction(user).queue();
         }
-        default-> event.getReaction().removeReaction(user).queue();
+        default -> event.getReaction().removeReaction(user).queue();
       }
     } else {
       event.getReaction().removeReaction(user).queue();

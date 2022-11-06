@@ -2,24 +2,33 @@ package controller;
 
 import exception.NoFileFound;
 import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import model.QuizSettings;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.channel.concrete.ThreadChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import repositories.PropertiesManager;
 import repositories.Resources;
 import services.DiscordQuiz;
 import services.EmbedMessageBuilder;
 import services.GitHubReport;
-import repositories.PropertiesManager;
 import services.Quiz;
 
+/**
+ * This class is used to manage the commands.
+ */
 public class CommandManager {
+  /**
+   * This method is used to manage the commands.
+   *
+   * @param command The command.
+   * @return "end" if the program should end.
+   * @throws InterruptedException If the thread is interrupted.
+   * @throws NoFileFound          If the file is not found.
+   * @throws IOException          If an I/O error occurs.
+   */
   public static String command(String command)
       throws InterruptedException, NoFileFound, IOException {
     switch (command) {
@@ -48,6 +57,13 @@ public class CommandManager {
     return "";
   }
   
+  /**
+   * This method is used to manage the commands.
+   *
+   * @param command The command to manage.
+   * @param event   The event that triggered the command.
+   * @throws IOException If an error occurs while loading the properties.
+   */
   public static void command(String command, MessageReceivedEvent event) throws IOException {
     
     String status = getQuizStatus(event);
@@ -55,12 +71,13 @@ public class CommandManager {
       case "in game" -> playing(command, event);
       case "setting" -> setting(command, event);
       case "out of game" -> outOfGame(command, event);
+      default -> throw new IllegalStateException("Unexpected value: " + status);
     }
   }
   
   private static String getQuizStatus(MessageReceivedEvent event) {
     QuizSettings settings = getFilteredQuizSettings(event);
-  
+    
     return settings != null ? settings.isRunning() ? "in game" : "setting" : "out of game";
   }
   
@@ -74,13 +91,17 @@ public class CommandManager {
   private static void playing(String command, MessageReceivedEvent event) {
     QuizSettings settings = getFilteredQuizSettings(event);
     User user = event.getAuthor();
-    if (user != settings.getRoomMaster()) {return;}
+    if (user != settings.getRoomMaster()) {
+      return;
+    }
     event.getMessage().delete().complete();
     switch (command) {
       case "yes" -> settings.getQuiz().nextQuestion();
       case "no" -> settings.backup();
       default ->
-          sendTemporaryMessage(settings.getQuizThread(), "Error: " + command + " not Recognized", 5);
+          sendTemporaryMessage(settings.getQuizThread(), "Error: " + command + " not Recognized",
+              5
+          );
     }
     
   }
@@ -111,10 +132,8 @@ public class CommandManager {
         case "choices" -> setting.setChoicesNumber(Integer.parseInt(value));
         case "question" -> setting.setQuestionNumber(Integer.parseInt(value));
         case "tca" -> {
-          if (value.equals("")){
-            sendTemporaryMessage(setting.getQuizThread(),
-                "Please enter a value.", 5
-            );
+          if (value.equals("")) {
+            sendTemporaryMessage(setting.getQuizThread(), "Please enter a value.", 5);
           }
           int maxTime = Integer.parseInt(PropertiesManager.getProperty("maxTimeToAnswer"));
           if (Integer.parseInt(value) > maxTime && Integer.parseInt(value) < 0) {
@@ -126,10 +145,8 @@ public class CommandManager {
           }
         }
         case "tbs" -> {
-          if (value.equals("")){
-            sendTemporaryMessage(setting.getQuizThread(),
-                "Please enter a value.", 5
-            );
+          if (value.equals("")) {
+            sendTemporaryMessage(setting.getQuizThread(), "Please enter a value.", 5);
           }
           int maxTime = Integer.parseInt(PropertiesManager.getProperty("maxTimeToShow"));
           if (Integer.parseInt(value) > maxTime && Integer.parseInt(value) < 0) {
@@ -141,10 +158,8 @@ public class CommandManager {
           }
         }
         case "ttn" -> {
-          if (value.equals("")){
-            sendTemporaryMessage(setting.getQuizThread(),
-                "Please enter a value.", 5
-            );
+          if (value.equals("")) {
+            sendTemporaryMessage(setting.getQuizThread(), "Please enter a value.", 5);
           }
           int maxTime = Integer.parseInt(PropertiesManager.getProperty("maxTimeToNext"));
           if (Integer.parseInt(value) > maxTime && Integer.parseInt(value) <= 0) {
@@ -203,7 +218,9 @@ public class CommandManager {
               .queue(msg -> new DiscordQuiz(finalSetting, msg));
         }
         default ->
-            sendTemporaryMessage(setting.getQuizThread(), "Error: " + command + " not Recognized", 5);
+            sendTemporaryMessage(setting.getQuizThread(), "Error: " + command + " not Recognized",
+                5
+            );
       }
     } catch (NumberFormatException e) {
       e.printStackTrace();

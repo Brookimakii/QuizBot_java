@@ -28,7 +28,7 @@ public class Main {
    * @param args the arguments
    */
   public static void main(String[] args) {
-    System.setOut(new PrintStream(System.out,true, StandardCharsets.UTF_8));
+    System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
     URL url = Main.class.getClassLoader().getResource("");
     if (url == null) {
       System.out.println("Error while loading app.properties");
@@ -45,7 +45,7 @@ public class Main {
     if (argList.contains("--console")) {
       System.out.println("Console mode");
       consoleBot();
-    }else{
+    } else {
       System.out.println("Discord mode");
       try {
         discordBot();

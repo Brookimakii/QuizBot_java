@@ -21,6 +21,9 @@ import org.jetbrains.annotations.NotNull;
 import repositories.PropertiesManager;
 import repositories.Resources;
 
+/**
+ * The discord version of the quiz.
+ */
 public class DiscordQuiz {
   private final ArrayList<QuizQuestion> questions = new ArrayList<>();
   @Setter int actualQuestion;
@@ -45,6 +48,12 @@ public class DiscordQuiz {
   @Getter private boolean isAnswerAvailable = false;
   @Getter private boolean isPassingNeeded = false;
   
+  /**
+   * Set up the quiz.
+   *
+   * @param setting The quiz settings.
+   * @param msg     The message that triggered the quiz.
+   */
   public DiscordQuiz(QuizSettings setting, Message msg) {
     this.setting = setting;
     this.timeToShowChoices = setting.getTimeToShowChoices();
@@ -65,7 +74,9 @@ public class DiscordQuiz {
     setting.setQuiz(this);
   }
   
-  
+  /**
+   * Set up the next question.
+   */
   public void nextQuestion() {
     ++actualQuestion;
     if (actualQuestion > questions.size()) {
@@ -144,6 +155,12 @@ public class DiscordQuiz {
     this.chronometer = new Chronometer(setting.getTimeToAnswer(), this, "discordTimeout");
   }
   
+  /**
+   * Register the answer of a player.
+   *
+   * @param player the player who answered.
+   * @param answer the answer of the player.
+   */
   public void registerAnswer(User player, int answer) {
     if (score.get(currentQuestion).get(player) == null) {
       score.get(currentQuestion).replace(player, answer);
@@ -157,6 +174,9 @@ public class DiscordQuiz {
     }
   }
   
+  /**
+   * Show the scores.
+   */
   public void printScore() {
     score.forEach((question, userIntegerHashMap) -> {
       System.out.println(question);
@@ -165,6 +185,9 @@ public class DiscordQuiz {
     });
   }
   
+  /**
+   * The Question timeout event.
+   */
   public void discordTimeout() {
     System.out.println("Timeout");
     this.isAnswerAvailable = false;

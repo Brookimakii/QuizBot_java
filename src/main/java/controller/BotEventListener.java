@@ -18,13 +18,24 @@ import net.dv8tion.jda.api.interactions.components.buttons.ButtonInteraction;
 import repositories.PropertiesManager;
 import services.EmbedMessageBuilder;
 
+/**
+ * This class is used to listen to events from the bot.
+ */
 public class BotEventListener extends ListenerAdapter {
+  /**
+   * This method is used to handle the event when a message, a reaction or an embed button press is
+   * received.
+   *
+   * @param event The event that is received.
+   */
   @Override
   public void onMessageReceived(MessageReceivedEvent event) {
-    if (event.getAuthor().isBot()) return;
+    if (event.getAuthor().isBot()) {
+      return;
+    }
     User user = event.getAuthor();
     Message message = event.getMessage();
-    String messageID = message.getId();
+    String messageId = message.getId();
     
     String content = message.getContentRaw();
     MessageChannel channel = event.getChannel();
@@ -46,8 +57,12 @@ public class BotEventListener extends ListenerAdapter {
   
   @Override
   public void onMessageReactionAdd(MessageReactionAddEvent event) {
-    if (event.getUser() == null) {return;}
-    if (event.getUser().isBot()) {return;}
+    if (event.getUser() == null) {
+      return;
+    }
+    if (event.getUser().isBot()) {
+      return;
+    }
     
     User user = event.getUser();
     MessageReaction reaction = event.getReaction();
@@ -59,7 +74,9 @@ public class BotEventListener extends ListenerAdapter {
   @Override
   public void onButtonInteraction(ButtonInteractionEvent event) {
     String buttonId = event.getButton().getId();
-    if (buttonId == null || buttonId.equals("")) {return;}
+    if (buttonId == null || buttonId.equals("")) {
+      return;
+    }
     String[] args = buttonId.split("_");
     String name = event.getButton().getId();
     System.out.println("Button pressed: " + name);

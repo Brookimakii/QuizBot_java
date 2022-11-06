@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,6 +48,8 @@ public class QuizSettings {
     this.players.add(roomMaster);
   }
   
+  //------------------------------------------------------------------------------------------------
+  
   public void addPlayer(User user) {
     this.players.add(user);
   }
@@ -56,14 +59,23 @@ public class QuizSettings {
   }
   
   public void addPlayer(String value) {
+    User newPlayer = Bot.getJda().getUserById(value);
+    System.out.println("New player: " + newPlayer);
     Member addedUser =
         this.getQuizThread().getParentChannel().getGuild().getMemberById(value);
+    System.out.println("Added user: " + addedUser);
     if (addedUser == null) {
       this.getQuizThread().sendMessage("Unable to find the user: " + value)
           .queue(message -> message.delete().queueAfter(5, TimeUnit.SECONDS));
       return;
     }
     addPlayer(addedUser.getUser());
+  }
+  
+  public void addPlayer(List<Member> members) {
+    for (Member member : members) {
+      addPlayer(member.getUser());
+    }
   }
   
   public void removePlayer(String userName) {
@@ -74,16 +86,24 @@ public class QuizSettings {
     removePlayer(playerToRemove);
   }
   
+  public void removePlayer(List<Member> members) {
+    for (Member member : members) {
+      removePlayer(member.getUser());
+    }
+  }
+  
+  
   public void start() {
     this.isRunning = true;
   }
+  
   public void backup() {
     this.isRunning = true;
   }
   
   public String toStyleString() {
     StringBuilder builder = new StringBuilder();
-    players.forEach(player -> builder.append("> ").append(player.getName()));
+    players.forEach(player -> builder.append("> <@").append(player.getId()).append(">\n"));
     
     return "" + "Title: " + title + "\n" + "Room Master: " + roomMaster.getName() + "\n\n"
            + "Number of questions: " + questionNumber + "\n" + "Number of choices: " + choicesNumber

@@ -50,15 +50,17 @@ public class BotEventListener extends ListenerAdapter {
     if (event.getUser().isBot()) {return;}
     
     User user = event.getUser();
-    String message = event.getMessageId();
     MessageReaction reaction = event.getReaction();
-    System.out.println("We received a reaction from " + user.getName() + ": " + reaction.getEmoji().getName());
-    
+    System.out.println(
+        "We received a reaction from " + user.getName() + ": " + reaction.getEmoji().getName());
+    EmoteManager.emote(event);
   }
   
   @Override
   public void onButtonInteraction(ButtonInteractionEvent event) {
-    String[] args = event.getButton().getId().split("_");
+    String buttonId = event.getButton().getId();
+    if (buttonId == null || buttonId.equals("")) {return;}
+    String[] args = buttonId.split("_");
     String name = event.getButton().getId();
     System.out.println("Button pressed: " + name);
     if (args[1].equalsIgnoreCase("page")) {
@@ -68,10 +70,8 @@ public class BotEventListener extends ListenerAdapter {
       }
       int pageNumber = Integer.parseInt(args[2]);
       EmbedMessageBuilder builder = new EmbedMessageBuilder();
-      switch (args[0]){
-        case "help":
-          builder.getHelpEmbed(pageNumber);
-          break;
+      if (args[0].equals("help")) {
+        builder.getHelpEmbed(pageNumber);
       }
       event.getMessage().editMessageEmbeds(builder.getMessageEmbed())
           .setActionRow(builder.getButtons()).queue();

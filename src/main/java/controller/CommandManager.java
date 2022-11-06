@@ -77,12 +77,8 @@ public class CommandManager {
     if (user != settings.getRoomMaster()) {return;}
     event.getMessage().delete().complete();
     switch (command) {
-      case "yes" -> {
-        settings.getQuiz().nextQuestion();
-      }
-      case "no" -> {
-        settings.backup();
-      }
+      case "yes" -> settings.getQuiz().nextQuestion();
+      case "no" -> settings.backup();
       default ->
           sendTemporaryMessage(settings.getQuizThread(), "Error: " + command + " not Recognized", 5);
     }
@@ -115,7 +111,13 @@ public class CommandManager {
         case "choices" -> setting.setChoicesNumber(Integer.parseInt(value));
         case "question" -> setting.setQuestionNumber(Integer.parseInt(value));
         case "tca" -> {
-          if (Integer.parseInt(value) > 10 && Integer.parseInt(value) < 0) {
+          if (value.equals("")){
+            sendTemporaryMessage(setting.getQuizThread(),
+                "Please enter a value.", 5
+            );
+          }
+          int maxTime = Integer.parseInt(PropertiesManager.getProperty("maxTimeToAnswer"));
+          if (Integer.parseInt(value) > maxTime && Integer.parseInt(value) < 0) {
             sendTemporaryMessage(setting.getQuizThread(),
                 "The value is too large or to small, please enter a value between 0 and 10.", 5
             );
@@ -124,7 +126,13 @@ public class CommandManager {
           }
         }
         case "tbs" -> {
-          if (Integer.parseInt(value) > 10 && Integer.parseInt(value) < 0) {
+          if (value.equals("")){
+            sendTemporaryMessage(setting.getQuizThread(),
+                "Please enter a value.", 5
+            );
+          }
+          int maxTime = Integer.parseInt(PropertiesManager.getProperty("maxTimeToShow"));
+          if (Integer.parseInt(value) > maxTime && Integer.parseInt(value) < 0) {
             sendTemporaryMessage(setting.getQuizThread(),
                 "The value is too large or to small, please enter a value between 0 and 10.", 5
             );
@@ -133,7 +141,13 @@ public class CommandManager {
           }
         }
         case "ttn" -> {
-          if (Integer.parseInt(value) > 10 && Integer.parseInt(value) <= 0) {
+          if (value.equals("")){
+            sendTemporaryMessage(setting.getQuizThread(),
+                "Please enter a value.", 5
+            );
+          }
+          int maxTime = Integer.parseInt(PropertiesManager.getProperty("maxTimeToNext"));
+          if (Integer.parseInt(value) > maxTime && Integer.parseInt(value) <= 0) {
             sendTemporaryMessage(setting.getQuizThread(),
                 "The value is too large or to small, please enter a value between 0 and 10.", 5
             );
@@ -145,7 +159,6 @@ public class CommandManager {
           setting.getOriginalMessage().editMessage(value).queue();
           setting.setTitle(value);
         }
-        
         case "join" -> {
           if (value.equals("")) {
             if (!setting.getPlayers().contains(user)) {
@@ -156,7 +169,7 @@ public class CommandManager {
               sendTemporaryMessage(
                   setting.getQuizThread(), "Only the room master can use this command.", 5);
             } else {
-              setting.addPlayer(value);
+              setting.addPlayer(event.getMessage().getMentions().getMembers());
             }
           }
         }
@@ -170,7 +183,7 @@ public class CommandManager {
               sendTemporaryMessage(
                   setting.getQuizThread(), "Only the room master can use this command.", 5);
             } else {
-              setting.removePlayer(value);
+              setting.addPlayer(event.getMessage().getMentions().getMembers());
             }
           }
         }
@@ -184,9 +197,7 @@ public class CommandManager {
           setting = null;
         }
         case "start" -> {
-          System.out.println();
           setting.start();
-          Message message;
           QuizSettings finalSetting = setting;
           setting.getQuizThread().sendMessage("Confirm parameters ?")
               .queue(msg -> new DiscordQuiz(finalSetting, msg));
@@ -195,6 +206,7 @@ public class CommandManager {
             sendTemporaryMessage(setting.getQuizThread(), "Error: " + command + " not Recognized", 5);
       }
     } catch (NumberFormatException e) {
+      e.printStackTrace();
       sendTemporaryMessage(setting.getQuizThread(),
           "Error: for the command \"" + key + "\" a number is awaited. \"" + value
           + "\" isn't a number", 3

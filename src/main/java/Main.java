@@ -2,6 +2,8 @@ import controller.CommandManager;
 import exception.NoFileFound;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -26,6 +28,7 @@ public class Main {
    * @param args the arguments
    */
   public static void main(String[] args) {
+    System.setOut(new PrintStream(System.out,true, StandardCharsets.UTF_8));
     URL url = Main.class.getClassLoader().getResource("");
     if (url == null) {
       System.out.println("Error while loading app.properties");
@@ -53,7 +56,7 @@ public class Main {
   }
   
   private static void discordBot() throws IOException {
-    Bot bot = new Bot();
+    new Bot();
   }
   
   private static void consoleBot() {

@@ -16,6 +16,8 @@ public class QuizQuestion {
   @Getter private final int answerId;
   @Getter private final ArrayList<String> choices;
   
+  
+  
   /**
    * The question quizz Constructor.
    *

@@ -35,9 +35,9 @@ public class Chronometer extends Timer {
     timerTask = new TimerTask() {
       @Override
       public void run() {
-        /*if (actualTime % 1000 == 0) {
-          //System.out.println(actualTime / 1000);
-        }*/
+        if (actualTime % 1000 == 0) {
+          System.out.print((actualTime / 1000) + " - ");
+        }
         if (++actualTime > timeoutTime + 1) {
           try {
             timeout();

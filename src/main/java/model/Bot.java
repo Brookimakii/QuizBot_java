@@ -10,8 +10,8 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import controller.BotEventListener;
 
 public class Bot {
-  @Getter private final JDABuilder builder;
-  @Getter private final JDA jda;
+  @Getter private static JDABuilder builder;
+  @Getter private static JDA jda;
   
   
   public Bot() {

@@ -14,6 +14,8 @@ import java.util.Collections;
 import lombok.Getter;
 import model.Question;
 import model.QuizSettings;
+import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.apache.commons.io.IOUtils;
 
 public class Resources {
@@ -88,8 +90,15 @@ public class Resources {
     settings.set(id, setting);
   }
   
-  public static void deleteSetting(QuizSettings setting){
+  public static void deleteSetting(QuizSettings setting) {
     settings.remove(setting);
+  }
+  
+  public static QuizSettings getFilteredSetting(MessageChannelUnion event) {
+    return Resources.getSettings().stream()
+        .filter(setting -> setting.getQuizThread().equals(event.asThreadChannel()))
+        .findFirst().orElse(null);
+    
   }
   
   

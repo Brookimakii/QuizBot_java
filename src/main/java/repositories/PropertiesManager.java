@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -18,8 +19,9 @@ public class PropertiesManager {
   
   static {
     
-    URL url = classLoader.getResource("app.properties");
+    URL url = classLoader.getResource("");
     if (url == null) {
+      System.out.println("app.properties not found");
       throw new RuntimeException("app.properties not found");
     }
     String rootPath = URLDecoder.decode(url.getPath(), StandardCharsets.UTF_8);
@@ -29,23 +31,28 @@ public class PropertiesManager {
       load();
     } catch (IOException e) {
       appProps = null;
-      java.lang.System.out.println("Error while loading app.properties");
+      System.out.println("Error while loading app.properties");
       throw new RuntimeException(e);
     }
     
   }
   
+  /**
+   * Load resources.
+   *
+   * @throws IOException if an error occurs while loading resources
+   */
   public static void load() throws IOException {
     try {
       Resources.loadQuestion();
     } catch (IOException e) {
-      java.lang.System.out.println("Error while loading questionFile");
+      System.out.println("Error while loading questionFile");
       throw e;
     }
     try {
       Resources.loadScore();
     } catch (IOException e) {
-      java.lang.System.out.println("Error while loading scoreFile");
+      System.out.println("Error while loading scoreFile");
       throw e;
     }
   }
@@ -54,4 +61,11 @@ public class PropertiesManager {
     return appProps.getProperty(key);
   }
   
+  public static Integer getPropertyAsInt(String key) {
+    return Integer.parseInt(appProps.getProperty(key));
+  }
+  
+  public static List<String> getPropertyAsList(String key) {
+    return List.of(appProps.getProperty(key).split(","));
+  }
 }

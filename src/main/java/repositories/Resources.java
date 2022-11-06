@@ -13,13 +13,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import lombok.Getter;
 import model.Question;
+import model.QuizSettings;
+import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.apache.commons.io.IOUtils;
 
+/**
+ * This class is used to load resources.
+ */
 public class Resources {
   private static final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
   private static final ObjectMapper mapper = new ObjectMapper();
   @Getter private static ArrayList<Question> questions;
   @Getter private static ArrayList<String> scores;
+  @Getter private static final ArrayList<QuizSettings> settings = new ArrayList<>();
   
   
   
@@ -35,7 +42,7 @@ public class Resources {
       questions = new ArrayList<>();
       return;
     }
-    questions = mapper.readValue(IOUtils.toString(inputStream, StandardCharsets.UTF_8),
+    Resources.questions = mapper.readValue(IOUtils.toString(inputStream, StandardCharsets.UTF_8),
         new TypeReference<>() {}
     );
   }
@@ -57,7 +64,12 @@ public class Resources {
     );
   }
   
-  
+  /**
+   * Save the question to the file.
+   *
+   * @param questions the questions to save
+   * @throws IOException if error occurs when writing the resource content.
+   */
   public static void saveQuestion(ArrayList<Question> questions) throws IOException {
     mapper.writerWithDefaultPrettyPrinter();
     URL url = classLoader.getResource(PropertiesManager.getProperty("questionFile"));
@@ -68,6 +80,12 @@ public class Resources {
     writeObjectInFile(questions, url);
   }
   
+  /**
+   * Save the scores to the file.
+   *
+   * @param scores the scores to save
+   * @throws IOException if error occurs when writing the resource content.
+   */
   public static void saveScore(ArrayList<String> scores) throws IOException {
     mapper.writerWithDefaultPrettyPrinter();
     URL url = classLoader.getResource(PropertiesManager.getProperty("scoreFile"));
@@ -78,6 +96,30 @@ public class Resources {
     writeObjectInFile(scores, url);
   }
   
+  public static void addSetting(QuizSettings setting) {
+    settings.add(setting);
+  }
+  
+  public static void overwriteSetting(QuizSettings setting, int id) {
+    settings.set(id, setting);
+  }
+  
+  public static void deleteSetting(QuizSettings setting) {
+    settings.remove(setting);
+  }
+  
+  /**
+   * This method filter the settings for the current game.
+   *
+   * @param event the event
+   * @return the settings
+   */
+  public static QuizSettings getFilteredSetting(MessageChannelUnion event) {
+    return Resources.getSettings().stream()
+        .filter(setting -> setting.getQuizThread().equals(event.asThreadChannel())).findFirst()
+        .orElse(null);
+    
+  }
   
   private static <T> void writeObjectInFile(ArrayList<T> element, URL url) throws IOException {
     String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(element);

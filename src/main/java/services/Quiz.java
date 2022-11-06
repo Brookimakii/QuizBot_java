@@ -4,10 +4,14 @@ import exception.QuizEnded;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Scanner;
+import lombok.Getter;
 import lombok.Setter;
 import model.Question;
 import model.QuizQuestion;
+import model.QuizSettings;
+import net.dv8tion.jda.api.entities.User;
 
 /**
  * This is the Quiz class.
@@ -18,6 +22,10 @@ public class Quiz {
   @Setter int actualQuestion;
   QuizQuestion currentQuestion;
   private Chronometer chronometer;
+  
+  @Getter @Setter private QuizSettings settings;
+  @Getter @Setter private HashMap<QuizQuestion, HashMap<User, Integer>> score;
+  
   private final int timeToChoose;
   private final int timeToNext;
   private final int timeToShow;
@@ -176,6 +184,5 @@ public class Quiz {
   }
   
   //------------------------------------------------------------------------------------------------
-  
   
 }

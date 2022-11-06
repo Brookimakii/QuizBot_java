@@ -2,12 +2,21 @@ import controller.CommandManager;
 import exception.NoFileFound;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.Scanner;
+import javax.security.auth.login.LoginException;
+import model.Bot;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
 import repositories.PropertiesManager;
+import repositories.Resources;
 
 /**
  * This class is the entry point of the program.
@@ -19,6 +28,7 @@ public class Main {
    * @param args the arguments
    */
   public static void main(String[] args) {
+    System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
     URL url = Main.class.getClassLoader().getResource("");
     if (url == null) {
       System.out.println("Error while loading app.properties");
@@ -31,18 +41,25 @@ public class Main {
       e.fillInStackTrace();
       throw new RuntimeException(e);
     }
-    String rootPath = URLDecoder.decode(url.getPath(), StandardCharsets.UTF_8);
-    String appConfigPath = rootPath + "app.properties";
-  
-    Properties appProps = new Properties();
-    try {
-      appProps.load(new FileInputStream(appConfigPath));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+    ArrayList<String> argList = new ArrayList<>(Arrays.stream(args).toList());
+    if (argList.contains("--console")) {
+      System.out.println("Console mode");
+      consoleBot();
+    } else {
+      System.out.println("Discord mode");
+      try {
+        discordBot();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
     }
-    String repo = appProps.getProperty("description");
-    System.out.println("Issue repo: " + repo);
-    
+  }
+  
+  private static void discordBot() throws IOException {
+    new Bot();
+  }
+  
+  private static void consoleBot() {
     Scanner scan = new Scanner(System.in);
     String state = "";
     while (!state.equals("end")) {
@@ -54,6 +71,5 @@ public class Main {
         throw new RuntimeException(e);
       }
     }
-    
   }
 }

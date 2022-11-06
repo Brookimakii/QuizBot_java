@@ -4,6 +4,7 @@ import exception.InvalidNumberOfChoices;
 import java.util.ArrayList;
 import java.util.Collections;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -11,12 +12,10 @@ import lombok.ToString;
  */
 @ToString
 public class QuizQuestion {
-  @Getter private final long id;
-  @Getter private final String statement;
-  @Getter private final int answerId;
-  @Getter private final ArrayList<String> choices;
-  
-  
+  @Getter @Setter private long id;
+  @Getter @Setter private String statement;
+  @Getter @Setter private int answerId;
+  @Getter @Setter private ArrayList<String> choices;
   
   /**
    * The question quizz Constructor.
@@ -35,6 +34,9 @@ public class QuizQuestion {
     ArrayList<String> choices = buildChoices(question, numberOfChoices);
     this.choices = choices;
     this.answerId = choices.indexOf(question.getAnswer());
+  }
+  
+  public QuizQuestion() {
   }
   
   private ArrayList<String> buildChoices(Question question, int numberOfChoices) {

@@ -1,0 +1,66 @@
+[
+	{
+		"id": 1,
+		"score": [
+			{
+				"quizQuestion": {
+					"id": 10,
+					"statement": "Laquelle de ces propositions n’est pas une unité du système international ?",
+					"answerId": 1,
+					"choices": ["Kelvin", "Gramme", "Candela", "Mole"]
+				},
+				"answer": {
+					"Brookimaki": 1
+				}
+			},
+			{
+				"quizQuestion": {
+					"id": 7,
+					"statement": "Combien de pays sont reconnus par l’ONU ?",
+					"answerId": 2,
+					"choices": ["185", "200", "195", "190"]
+				},
+				"answer": {
+					"Brookimaki": 2
+				}
+			},
+			{
+				"quizQuestion": {
+					"id": 17,
+					"statement": "En quelle année l’Homme a-t-il marché sur la lune ?",
+					"answerId": 3,
+					"choices": ["1967", "1963", "1970", "1969"]
+				},
+				"answer": {
+					"Brookimaki": 1
+				}
+			},
+			{
+				"quizQuestion": {
+					"id": 11,
+					"statement": "Lequel de ces instruments ne fait pas partie de l’orchestre symphonique ?",
+					"answerId": 1,
+					"choices": ["Le Glockenspiel", "La Flûte à bec", "Le Saxophone", "Le Bassons"]
+				},
+				"answer": {
+					"Brookimaki": 1
+				}
+			},
+			{
+				"quizQuestion": {
+					"id": 13,
+					"statement": "A quel ordre de grandeur numérique appartient le préfixe du Système international d'unité “péta” ?",
+					"answerId": 3,
+					"choices": ["10^17", "10^19", "10^12", "10^15"]
+				},
+				"answer": {
+					"Brookimaki": 3
+				}
+			}
+		],
+		"playerScore": {
+			"Brookimaki": 420
+		},
+		"maxScore": 600
+	}
+]

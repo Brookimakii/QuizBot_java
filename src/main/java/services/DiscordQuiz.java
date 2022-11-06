@@ -1,5 +1,6 @@
 package services;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.SortedMap;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +21,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import org.jetbrains.annotations.NotNull;
 import repositories.PropertiesManager;
+import repositories.QuizSave;
 import repositories.Resources;
 
 /**
@@ -114,17 +117,26 @@ public class DiscordQuiz {
       }
     }
     
-    System.out.println("Max Score" + ": " + score + "\n");
+    System.out.println("Max Score" + ": " + maxScore + "\n");
     
     playerScore.forEach((player, score) -> System.out.println(player.getName() + " <==> " + score));
+    
+    EmbedMessageBuilder embed = new EmbedMessageBuilder();
+    try {
+      QuizSave quizSave = new QuizSave(score, playerScore, maxScore);
+      embed.getScoreEmbed(quizSave, 1);
+      setting.getQuizThread().sendMessageEmbeds(embed.getMessageEmbed()).addActionRow(embed.getButtons()).queue();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
   
   private int streakBonus(int streak) {
     int questionMaxScore = PropertiesManager.getPropertyAsInt("questionMaxScore");
     if (streak > 1 && streak <= 5) {
-      return (questionMaxScore / 100) * (streak - 1);
+      return (questionMaxScore / 10) * (streak - 1);
     } else if (streak > 5) {
-      return (questionMaxScore / 100) * 5;
+      return (questionMaxScore / 10) * 5;
     }
     return 0;
   }
@@ -162,7 +174,6 @@ public class DiscordQuiz {
     }
     int count = Collections.frequency(score.get(currentQuestion).values(), null);
     if (count == 0) {
-      System.out.println("End");
       chronometer.stop();
       this.isAnswerAvailable = false;
       showAnswer();
@@ -190,12 +201,11 @@ public class DiscordQuiz {
   }
   
   private void showAnswer() {
-    System.out.println("Show answer");
-    
     setting.getQuestionMessage().editMessage(statementBuild() + "\n" + answerBuild()).queue();
     if (setting.getTimeToPassToNext() > 0) {
       try {
         Thread.sleep(Duration.ofSeconds(setting.getTimeToPassToNext()));
+        nextQuestion();
       } catch (InterruptedException e) {
         System.out.println("Error while waiting for the choices to appear");
         throw new RuntimeException(e);
@@ -240,8 +250,22 @@ public class DiscordQuiz {
       } else {
         sb.append(PropertiesManager.getProperty("emoteIncorrect"));
       }
-      sb.append(" - ").append(currentQuestion.getChoices().get(i)).append("\n");
+      int finalI = i;
+      long answerNb =
+          score.get(currentQuestion).values().stream().filter(integer -> integer == finalI).count();
+      sb.append(" - ");
+      sb.append("(").append(answerNb).append(") - ");
+      sb.append(currentQuestion.getChoices().get(i)).append("\n");
     }
+    long noAnswerNb =
+        score.get(currentQuestion).values().stream().filter(Objects::isNull).count();
+    if (noAnswerNb > 0) {
+      sb.append("\n")
+          .append("No Answer: ")
+          .append(noAnswerNb);
+    }
+    
+    
     return sb.toString();
   }
   

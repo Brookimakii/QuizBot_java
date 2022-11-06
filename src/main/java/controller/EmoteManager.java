@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
+import repositories.PropertiesManager;
 import repositories.Resources;
 
 /**
@@ -23,7 +24,7 @@ public class EmoteManager {
   public static void emote(MessageReactionAddEvent event) {
     QuizSettings settings = Resources.getFilteredSetting(event.getChannel());
     User user = event.getUser();
-  
+    
     if (settings == null || user == null) {
       return;
     }
@@ -34,7 +35,7 @@ public class EmoteManager {
     if (!settings.getPlayers().contains(user)) {
       return;
     }
-  
+    
     String emote = event.getReaction().getEmoji().getName();
     List<String> emotes = settings.getQuiz().getEmotes();
     int answer = emotes.indexOf(emote);
@@ -56,30 +57,29 @@ public class EmoteManager {
         settings.getQuiz().registerAnswer(user, answer);
       }
     } else if (settings.getQuiz().isPassingNeeded()) {
-      Message message = event.getChannel()
-          .retrieveMessageById(settings.getQuestionMessage().getId())
-          .complete();
+      Message message =
+          event.getChannel().retrieveMessageById(settings.getQuestionMessage().getId()).complete();
       for (MessageReaction reaction : message.getReactions()) {
         System.out.println(reaction.getEmoji().getName());
       }
-      switch (emote) {
-        case "\u23ED\uFE0F" -> {
-          if (user.equals(settings.getRoomMaster())) {
+      String emoteNext = PropertiesManager.getProperty("emoteNext");
+      String emoteReport = PropertiesManager.getProperty("emoteReport");
+      if (emote.equals(emoteNext)) {
+        if (user.equals(settings.getRoomMaster())) {
+          settings.getQuiz().nextQuestion();
+        } else {
+          int numberOfCheck = settings.getQuestionMessage().getReactions().stream()
+              .filter(reaction -> reaction.getEmoji().equals(Emoji.fromUnicode("✅"))).toList()
+              .size();
+          if (100 * numberOfCheck / settings.getPlayers().size() >= 75) {
             settings.getQuiz().nextQuestion();
-          } else {
-            int numberOfCheck = settings.getQuestionMessage().getReactions().stream()
-                .filter(reaction -> reaction.getEmoji().equals(Emoji.fromUnicode("✅"))).toList()
-                .size();
-            if (100 * numberOfCheck / settings.getPlayers().size() >= 75) {
-              settings.getQuiz().nextQuestion();
-            }
           }
         }
-        case "\u2757" -> {
-          System.out.println("Reporting");
-          event.getReaction().removeReaction(user).queue();
-        }
-        default -> event.getReaction().removeReaction(user).queue();
+      } else if (emote.equals(emoteReport)) {
+        System.out.println("Reporting");
+        event.getReaction().removeReaction(user).queue();
+      } else {
+        event.getReaction().removeReaction(user).queue();
       }
     } else {
       event.getReaction().removeReaction(user).queue();

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -60,4 +61,11 @@ public class PropertiesManager {
     return appProps.getProperty(key);
   }
   
+  public static Integer getPropertyAsInt(String key) {
+    return Integer.parseInt(appProps.getProperty(key));
+  }
+  
+  public static List<String> getPropertyAsList(String key) {
+    return List.of(appProps.getProperty(key).split(","));
+  }
 }

@@ -34,12 +34,7 @@ public class DiscordQuiz {
   @Getter private final int timeToPassToNext;
   @Getter private final int timeToAnswer;
   
-  @Getter List<String> emotes =
-      List.of("\uD83C\uDDE6", "\uD83C\uDDE7", "\uD83C\uDDE8", "\uD83C\uDDE9", "\uD83C\uDDEA",
-          "\uD83C\uDDEB", "\uD83C\uDDEC", "\uD83C\uDDED", "\uD83C\uDDEE", "\uD83C\uDDEF",
-          "\uD83C\uDDF0", "\uD83C\uDDF1", "\uD83C\uDDF2", "\uD83C\uDDF3", "\uD83C\uDDF4",
-          "\uD83C\uDDF5", "\uD83C\uDDF6", "\uD83C\uDDF7", "\uD83C\uDDF8", "\uD83C\uDDF9"
-      );
+  @Getter List<String> emotes = PropertiesManager.getPropertyAsList("emoteAnswer");
   
   @Getter @Setter private QuizSettings setting;
   @Getter @Setter private LinkedHashMap<QuizQuestion, HashMap<User, Integer>> score;
@@ -89,7 +84,7 @@ public class DiscordQuiz {
   }
   
   private void calculateScore() {
-    int questionMaxScore = Integer.parseInt(PropertiesManager.getProperty("questionMaxScore"));
+    int questionMaxScore = PropertiesManager.getPropertyAsInt("questionMaxScore");
     int maxScore = 0;
     int maxStreak = 0;
     
@@ -125,7 +120,7 @@ public class DiscordQuiz {
   }
   
   private int streakBonus(int streak) {
-    int questionMaxScore = Integer.parseInt(PropertiesManager.getProperty("questionMaxScore"));
+    int questionMaxScore = PropertiesManager.getPropertyAsInt("questionMaxScore");
     if (streak > 1 && streak <= 5) {
       return (questionMaxScore / 100) * (streak - 1);
     } else if (streak > 5) {
@@ -206,14 +201,16 @@ public class DiscordQuiz {
         throw new RuntimeException(e);
       }
     } else {
+      String nextEmote = PropertiesManager.getProperty("emoteNext");
+      String reportEmote = PropertiesManager.getProperty("emoteReport");
       System.out.println("No time to pass to next question");
       setting.getQuestionMessage().clearReactions().complete();
       setting.getQuestionMessage().editMessage(
               statementBuild() + "\n" + answerBuild() + "--------------------------------\n\n"
-              + "\u23ED\uFE0F - Next question.\n" + "\u2757 - Report question.")
+              + nextEmote + " - Next question.\n" + reportEmote + " - Report question.")
           .queue(message -> setting.setQuestionMessage(message));
-      setting.getQuestionMessage().addReaction(Emoji.fromUnicode("\u23ED\uFE0F")).queue();
-      setting.getQuestionMessage().addReaction(Emoji.fromUnicode("\u2757")).queue();
+      setting.getQuestionMessage().addReaction(Emoji.fromUnicode(nextEmote)).queue();
+      setting.getQuestionMessage().addReaction(Emoji.fromUnicode(reportEmote)).queue();
       
       this.isPassingNeeded = true;
     }
@@ -239,9 +236,9 @@ public class DiscordQuiz {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < currentQuestion.getChoices().size(); ++i) {
       if (i == currentQuestion.getAnswerId()) {
-        sb.append(":white_check_mark:");
+        sb.append(PropertiesManager.getProperty("emoteCorrect"));
       } else {
-        sb.append(":x:");
+        sb.append(PropertiesManager.getProperty("emoteIncorrect"));
       }
       sb.append(" - ").append(currentQuestion.getChoices().get(i)).append("\n");
     }

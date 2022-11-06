@@ -135,7 +135,7 @@ public class CommandManager {
           if (value.equals("")) {
             sendTemporaryMessage(setting.getQuizThread(), "Please enter a value.", 5);
           }
-          int maxTime = Integer.parseInt(PropertiesManager.getProperty("maxTimeToAnswer"));
+          int maxTime = PropertiesManager.getPropertyAsInt("maxTimeToAnswer");
           if (Integer.parseInt(value) > maxTime && Integer.parseInt(value) < 0) {
             sendTemporaryMessage(setting.getQuizThread(),
                 "The value is too large or to small, please enter a value between 0 and 10.", 5
@@ -148,7 +148,7 @@ public class CommandManager {
           if (value.equals("")) {
             sendTemporaryMessage(setting.getQuizThread(), "Please enter a value.", 5);
           }
-          int maxTime = Integer.parseInt(PropertiesManager.getProperty("maxTimeToShow"));
+          int maxTime = PropertiesManager.getPropertyAsInt("maxTimeToShow");
           if (Integer.parseInt(value) > maxTime && Integer.parseInt(value) < 0) {
             sendTemporaryMessage(setting.getQuizThread(),
                 "The value is too large or to small, please enter a value between 0 and 10.", 5
@@ -161,7 +161,7 @@ public class CommandManager {
           if (value.equals("")) {
             sendTemporaryMessage(setting.getQuizThread(), "Please enter a value.", 5);
           }
-          int maxTime = Integer.parseInt(PropertiesManager.getProperty("maxTimeToNext"));
+          int maxTime = PropertiesManager.getPropertyAsInt("maxTimeToNext");
           if (Integer.parseInt(value) > maxTime && Integer.parseInt(value) <= 0) {
             sendTemporaryMessage(setting.getQuizThread(),
                 "The value is too large or to small, please enter a value between 0 and 10.", 5

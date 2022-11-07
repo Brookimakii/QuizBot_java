@@ -1,21 +1,19 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import net.dv8tion.jda.api.EmbedBuilder;
+import java.util.Arrays;
+import java.util.List;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
-import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
-import net.dv8tion.jda.api.interactions.components.buttons.ButtonInteraction;
 import repositories.PropertiesManager;
+import repositories.Resources;
 import services.EmbedMessageBuilder;
 
 /**
@@ -73,23 +71,35 @@ public class BotEventListener extends ListenerAdapter {
   
   @Override
   public void onButtonInteraction(ButtonInteractionEvent event) {
+    event.deferEdit().queue();
+    
     String buttonId = event.getButton().getId();
     if (buttonId == null || buttonId.equals("")) {
       return;
     }
-    String[] args = buttonId.split("_");
+    List<String> args = Arrays.stream(buttonId.split("_")).toList();
     String name = event.getButton().getId();
     System.out.println("Button pressed: " + name);
-    if (args[1].equalsIgnoreCase("page")) {
-      if (args[2].equalsIgnoreCase("cancel")) {
+    if (args.contains("page")) {
+      if (args.contains("cancel")) {
         event.getMessage().delete().queue();
         return;
       }
-      int pageNumber = Integer.parseInt(args[2]);
       EmbedMessageBuilder builder = new EmbedMessageBuilder();
-      if (args[0].equals("help")) {
+      if (args.contains("help")) {
+        int pageNumber = Integer.parseInt(args.get(2));
         builder.getHelpEmbed(pageNumber);
+      } else if (args.contains("score")) {
+        int pageNumber = Integer.parseInt(args.get(3));
+        int quizId = Integer.parseInt(args.get(1));
+        try {
+          builder.getScoreEmbed(Resources.loadQuizNo(quizId), pageNumber);
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        }
       }
+      //event.editMessageEmbeds(builder.getMessageEmbed()).setActionRow(builder.getButtons())
+      // .queue();
       event.getMessage().editMessageEmbeds(builder.getMessageEmbed())
           .setActionRow(builder.getButtons()).queue();
     }

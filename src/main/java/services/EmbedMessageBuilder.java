@@ -1,6 +1,8 @@
 package services;
 
 import exception.EmbedPageOutOfBound;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -138,7 +140,7 @@ public class EmbedMessageBuilder {
       embed.setColor(0x33cc33);
       setButtons(id, pageNumber, score.size() + 1);
       
-    } else if (pageNumber <= score.size()) {
+    } else if (pageNumber <= score.size() + 1) {
       QuizQuestion question = score.get(pageNumber - 2).getQuizQuestion();
       HashMap<String, Integer> questionScore = score.get(pageNumber - 2).getAnswer();
       ArrayList<String> answer = question.getChoices();
@@ -178,9 +180,9 @@ public class EmbedMessageBuilder {
         }
       }
       
-      embed.addField(answerBuilder.toString(), "", false);
-      embed.addBlankField(false);
-      embed.addField(playerAnswerBuilder.toString(), "", false);
+      embed.addField(answerBuilder.toString(), "", true);
+      embed.addField(playerAnswerBuilder.toString(), "", true);
+      embed.setTimestamp(LocalDateTime.now());
       
       embed.setColor(0x33cc33);
       setButtons(id, pageNumber, score.size() + 1);
